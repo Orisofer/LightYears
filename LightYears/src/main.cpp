@@ -1,9 +1,7 @@
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 int main()
 {
-    std::cout << "Hello Vorleeed" << std::endl;
-    std::cout << "Hello cool" << std::endl;
-    std::cout << "Hello good luck" << std::endl;
-    std::cout << "Hello with project" << std::endl;
+    sf::RenderWindow renderWindow{sf::VideoMode(100,100), "My Window"};
 }
