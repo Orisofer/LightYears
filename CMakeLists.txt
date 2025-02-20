@@ -10,10 +10,6 @@ set(CMAKE_CXX_STANDARD               14)
 set(CMAKE_CXX_STANDARD_REQUIRED      ON)
 set(CMAKE_CXX_EXTENSIONS            OFF)
 
-set(LIGHT_YEARS_GAME_TARGET_NAME LighYearsGame)
-
-add_subdirectory(LightYears)
-    	
 set_property(DIRECTORY
     ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT LightYearsGame)
 
@@ -30,8 +26,8 @@ FetchContent_Declare(
  
 FetchContent_MakeAvailable(${SFML_LIB_NAME})
 
-target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC sfml-graphics)
-target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC sfml-system)
-target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC sfml-window)
-target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC sfml-network)
-target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC sfml-audio)
+set(LIGHT_YEARS_GAME_TARGET_NAME LighYearsGame)
+
+add_subdirectory(LightYears)
+
+
