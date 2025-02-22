@@ -16,6 +16,11 @@ m_Window{sf::VideoMode(1024,1440), "Light Years"},
 m_TargetFrameRate{60.0f},
 m_TickClock{} {}
 
+Application::Application(float width, float height) :
+m_Window{sf::VideoMode(width,height), "Light Years"},
+m_TargetFrameRate{60.0f},
+m_TickClock{} {}
+
 void
 Application::Run()
 {
@@ -34,9 +39,6 @@ Application::Run()
             {
                 m_Window.close();
             }
-            
-            m_Window.clear(sf::Color::Blue);
-            m_Window.display();
         }
         
         accumulatedTime += m_TickClock.restart().asSeconds();
@@ -45,21 +47,39 @@ Application::Run()
         {
             accumulatedTime -= targetDeltaTime;
             
-            Tick(targetDeltaTime);
-            Render();
+            TickInternal(targetDeltaTime);
+            RenderInternal();
         }
     }
 }
 
 void
-Application::Tick(float deltaTime)
+Application::TickInternal(float deltaTime)
 {
-    std::cout << "ticking at frame rate: " << 1 / deltaTime << std::endl;
+    Tick(deltaTime);
 }
 
-void Application::Render()
+void
+Application::Tick(float deltaTime)
 {
     
+}
+
+void Application::RenderInternal()
+{
+    m_Window.clear();
+    Render();
+    m_Window.display();
+}
+
+void
+Application::Render()
+{
+    sf::RectangleShape rect{sf::Vector2f{100,100}};
+    rect.setFillColor(sf::Color::Red);
+    rect.setOrigin(50,50);
+    rect.setPosition((m_Window.getSize().x / 2), (m_Window.getSize().y / 2));
+    m_Window.draw(rect);
 }
 
 Application::~Application()
@@ -67,5 +87,6 @@ Application::~Application()
     std::cout << "Application destructor called" << std::endl;
     m_Window.close();
 }
+
 
 }

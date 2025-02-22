@@ -17,14 +17,24 @@ namespace ly
 class Application
 {
 public:
+    
     Application();
+    Application(float width, float height);
+    
     void Run();
-    void Tick(float deltaTime);
-    void Render();
+    void TickInternal(float deltaTime);
+    void RenderInternal();
+    
+    virtual void Tick(float deltaTime);
+    virtual void Render();
+    
     ~Application();
+    
 private:
+    
     sf::RenderWindow m_Window;
     sf::Clock m_TickClock;
+    
     float m_TargetFrameRate;
 };
 
