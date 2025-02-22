@@ -19,9 +19,13 @@ class Application
 public:
     Application();
     void Run();
+    void Tick(float deltaTime);
+    void Render();
     ~Application();
 private:
     sf::RenderWindow m_Window;
+    sf::Clock m_TickClock;
+    float m_TargetFrameRate;
 };
 
 }
