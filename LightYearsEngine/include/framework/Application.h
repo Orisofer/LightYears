@@ -21,12 +21,12 @@ public:
     Application();
     Application(float width, float height);
     
+    virtual void Tick(float deltaTime);
+    virtual void Render();
+    
     void Run();
     void TickInternal(float deltaTime);
     void RenderInternal();
-    
-    virtual void Tick(float deltaTime);
-    virtual void Render();
     
     ~Application();
     
