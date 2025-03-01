@@ -6,20 +6,23 @@
 //
 
 #include "framework/Application.h"
-#include <iostream>
+#include "framework/Core.h"
+#include "framework/World.h"
 
 namespace ly
 {
 
 Application::Application() :
-m_Window{sf::VideoMode(1024,1440), "Light Years"},
+m_Window{sf::VideoMode(600,800), "Light Years"},
 m_TargetFrameRate{60.0f},
-m_TickClock{} {}
+m_TickClock{},
+m_CurrentWorld{nullptr} {}
 
 Application::Application(float width, float height) :
 m_Window{sf::VideoMode(width,height), "Light Years"},
 m_TargetFrameRate{60.0f},
-m_TickClock{} {}
+m_TickClock{},
+m_CurrentWorld{nullptr} {}
 
 void
 Application::Run()
@@ -41,7 +44,8 @@ Application::Run()
             }
         }
         
-        accumulatedTime += m_TickClock.restart().asSeconds();
+        float frameDeltaTime = m_TickClock.restart().asSeconds();
+        accumulatedTime += frameDeltaTime;
         
         while (accumulatedTime > targetDeltaTime)
         {
@@ -57,6 +61,12 @@ void
 Application::TickInternal(float deltaTime)
 {
     Tick(deltaTime);
+    
+    if (m_CurrentWorld)
+    {
+        m_CurrentWorld->BeginPlayInternal();
+        m_CurrentWorld->TickInternal(deltaTime);
+    }
 }
 
 void
@@ -84,7 +94,7 @@ Application::Render()
 
 Application::~Application()
 {
-    std::cout << "Application destructor called" << std::endl;
+    LOG("Application destructor called");
     m_Window.close();
 }
 
