@@ -34,9 +34,18 @@ World::TickInternal(float deltaTime)
     
     m_PendingActors.clear();
     
-    for (shared<Actor> actor : m_Actors)
+    for (auto iter = m_Actors.begin(); iter != m_Actors.end(); )
     {
-        actor->Tick(deltaTime);
+        if (iter->get()->IsPendingDestroyed())
+        {
+            iter = m_Actors.erase(iter);
+        }
+        else
+        {
+            iter->get()->Tick(deltaTime);
+            ++iter;
+        }
+        
     }
     
     Tick(deltaTime);

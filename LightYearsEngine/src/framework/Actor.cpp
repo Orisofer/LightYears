@@ -32,7 +32,7 @@ Actor::Tick(float deltaTime)
 
 Actor::~Actor()
 {
-    
+    LOG("Actor Destroyed");
 }
 
 }

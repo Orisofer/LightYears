@@ -25,6 +25,22 @@ GameApplication::GameApplication(float width, float height)
 {
     weak<World> newWorld = LoadWorld<World>();
     newWorld.lock()->SpawnActor<Actor>();
+    m_ActorToDestroy = newWorld.lock()->SpawnActor<Actor>();
+    m_Counter = 0;
+}
+
+void
+GameApplication::Tick(float deltaTime)
+{
+    m_Counter += deltaTime;
+    
+    if (m_Counter > 4.f)
+    {
+        if (!m_ActorToDestroy.expired())
+        {
+            m_ActorToDestroy.lock()->Destroy();
+        }
+    }
 }
 
 }
