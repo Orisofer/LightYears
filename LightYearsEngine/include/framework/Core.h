@@ -28,7 +28,7 @@ template<typename T>
 using weak = std::weak_ptr<T>;
 
 template<typename T>
-using List = std::vector<T>();
+using List = std::vector<T>;
 
 template<typename Tkey, typename Tvalue, typename Tpredicate = std::less<Tkey>>
 using Map = std::map<Tkey, Tvalue, Tpredicate>;

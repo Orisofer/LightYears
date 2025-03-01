@@ -1,5 +1,6 @@
 #include "gameFramework/GameApplication.h"
 #include "framework/World.h"
+#include "framework/Actor.h"
 
 ly::Application* GetApplication()
 {
@@ -22,7 +23,8 @@ GameApplication::GameApplication()
 GameApplication::GameApplication(float width, float height)
 : Application(width, height)
 {
-    LoadWorld<World>();
+    weak<World> newWorld = LoadWorld<World>();
+    newWorld.lock()->SpawnActor<Actor>();
 }
 
 }

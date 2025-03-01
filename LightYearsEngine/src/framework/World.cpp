@@ -1,12 +1,17 @@
 
 #include "framework/World.h"
 #include "framework/Core.h"
+#include "framework/Actor.h"
 
 namespace ly
 {
 
 World::World(Application* owningApp)
-: m_OwningApp{owningApp}, m_Playing{false} { }
+: m_OwningApp{owningApp},
+m_Playing{false},
+m_Actors{},
+m_PendingActors{} {}
+
 
 void
 World::BeginPlayInternal()
@@ -21,6 +26,19 @@ World::BeginPlayInternal()
 void
 World::TickInternal(float deltaTime)
 {
+    for (shared<Actor> actor : m_PendingActors)
+    {
+        m_Actors.push_back(actor);
+        actor->BeginPlayInternal();
+    }
+    
+    m_PendingActors.clear();
+    
+    for (shared<Actor> actor : m_Actors)
+    {
+        actor->Tick(deltaTime);
+    }
+    
     Tick(deltaTime);
 }
 
@@ -32,7 +50,7 @@ World::BeginPlay()
 
 void World::Tick(float deltaTime)
 {
-    LOG("Ticking at framerate %f", 1.0f / deltaTime);
+    //LOG("Ticking at framerate %f", 1.0f / deltaTime);
 }
 
 World::~World()
