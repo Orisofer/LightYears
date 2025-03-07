@@ -14,47 +14,35 @@
 
 namespace ly
 {
+    class World;
 
-class World;
+    class Application
+    {
+    public:
+        Application();
+        Application(unsigned int width, unsigned int height, const std::string title, sf::Uint32 style);
+        void Run();
+        template<typename T>
+        weak<World> LoadWorld();
+        ~Application();
+    private:
+        void TickInternal(float deltaTime);
+        void RenderInternal();
+        virtual void Tick(float deltaTime);
+        virtual void Render();
+        sf::RenderWindow m_Window;
+        sf::Clock m_TickClock;
+        shared<World> m_CurrentWorld;
+        float m_TargetFrameRate;
+    };
 
-class Application
-{
-public:
-    
-    Application();
-    Application(float width, float height);
-    
-    void Run();
-    
     template<typename T>
-    weak<World> LoadWorld();
-    
-    ~Application();
-    
-private:
-    
-    void TickInternal(float deltaTime);
-    void RenderInternal();
-    
-    virtual void Tick(float deltaTime);
-    virtual void Render();
-    
-    sf::RenderWindow m_Window;
-    sf::Clock m_TickClock;
-    
-    shared<World> m_CurrentWorld;
-    
-    float m_TargetFrameRate;
-};
-
-template<typename T>
-weak<World> Application::LoadWorld()
-{
-    shared<T> newWorldPtr{ new T{ this } };
-    m_CurrentWorld = newWorldPtr;
-    return newWorldPtr;
-}
-
+    weak<World> Application::LoadWorld()
+    {
+        shared<T> newWorldPtr{ new T{ this } };
+        m_CurrentWorld = newWorldPtr;
+        return newWorldPtr;
+    }
 }
 
 #endif /* Application_hpp */

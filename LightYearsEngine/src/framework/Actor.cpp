@@ -3,37 +3,33 @@
 
 namespace ly
 {
-
-Actor::Actor(World* owningWorld)
-: m_OwningWorld{owningWorld},
-m_IsPlaying(false) {}
-
-void
-Actor::BeginPlayInternal()
-{
-    if (!m_IsPlaying)
+    Actor::Actor(World* owningWorld) : m_OwningWorld{owningWorld}, m_IsPlaying(false)
     {
-        m_IsPlaying = true;
-        BeginPlay();
+
     }
-}
 
-void
-Actor::BeginPlay()
-{
-    LOG("actor begin play");
-}
+    void Actor::BeginPlayInternal()
+    {
+        if (!m_IsPlaying)
+        {
+            m_IsPlaying = true;
+            BeginPlay();
+        }
+    }
 
-void
-Actor::Tick(float deltaTime)
-{
-    
-}
+    void Actor::BeginPlay()
+    {
 
-Actor::~Actor()
-{
-    LOG("Actor Destroyed");
-}
+    }
 
+    void Actor::Tick(float deltaTime)
+    {
+
+    }
+
+    Actor::~Actor()
+    {
+        LOG("Actor Destroyed");
+    }
 }
 

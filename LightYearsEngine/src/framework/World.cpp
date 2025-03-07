@@ -5,66 +5,56 @@
 
 namespace ly
 {
+    World::World(Application* owningApp) : m_OwningApp{owningApp}, m_Playing{false}, m_Actors{}, m_PendingActors{} {}
 
-World::World(Application* owningApp)
-: m_OwningApp{owningApp},
-m_Playing{false},
-m_Actors{},
-m_PendingActors{} {}
-
-
-void
-World::BeginPlayInternal()
-{
-    if (!m_Playing)
+    void World::BeginPlayInternal()
     {
-        m_Playing = true;
-        BeginPlay();
-    }
-}
-
-void
-World::TickInternal(float deltaTime)
-{
-    for (shared<Actor> actor : m_PendingActors)
-    {
-        m_Actors.push_back(actor);
-        actor->BeginPlayInternal();
-    }
-    
-    m_PendingActors.clear();
-    
-    for (auto iter = m_Actors.begin(); iter != m_Actors.end(); )
-    {
-        if (iter->get()->IsPendingDestroyed())
+        if (!m_Playing)
         {
-            iter = m_Actors.erase(iter);
+            m_Playing = true;
+            BeginPlay();
         }
-        else
-        {
-            iter->get()->Tick(deltaTime);
-            ++iter;
-        }
-        
     }
-    
-    Tick(deltaTime);
-}
 
-void
-World::BeginPlay()
-{
-    LOG("World Begin");
-}
+    void World::TickInternal(float deltaTime)
+    {
+        for (shared<Actor> actor : m_PendingActors)
+        {
+            m_Actors.push_back(actor);
+            actor->BeginPlayInternal();
+        }
 
-void World::Tick(float deltaTime)
-{
-    //LOG("Ticking at framerate %f", 1.0f / deltaTime);
-}
+        m_PendingActors.clear();
 
-World::~World()
-{
-    
-}
+        for (auto iter = m_Actors.begin(); iter != m_Actors.end(); )
+        {
+            if (iter->get()->IsPendingDestroyed())
+            {
+                iter = m_Actors.erase(iter);
+            }
+            else
+            {
+                iter->get()->Tick(deltaTime);
+                ++iter;
+            }
 
+        }
+
+        Tick(deltaTime);
+    }
+
+    void World::BeginPlay()
+    {
+        LOG("World Begin");
+    }
+
+    void World::Tick(float deltaTime)
+    {
+        //LOG("Ticking at framerate %f", 1.0f / deltaTime);
+    }
+
+    World::~World()
+    {
+
+    }
 }
