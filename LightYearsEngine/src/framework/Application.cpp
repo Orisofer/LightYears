@@ -75,11 +75,10 @@ title, style}, m_TargetFrameRate{60.0f}, m_TickClock{}, m_CurrentWorld{nullptr} 
 
     void Application::Render()
     {
-        sf::RectangleShape rect{sf::Vector2f{100,100}};
-        rect.setFillColor(sf::Color::Red);
-        rect.setOrigin(50,50);
-        rect.setPosition((m_Window.getSize().x / 2), (m_Window.getSize().y / 2));
-        m_Window.draw(rect);
+        if (m_CurrentWorld)
+        {
+            m_CurrentWorld->Render(m_Window);
+        }
     }
 
     Application::~Application()

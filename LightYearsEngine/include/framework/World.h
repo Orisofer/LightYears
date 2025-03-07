@@ -2,6 +2,7 @@
 #define World_hpp
 
 #include "framework/Core.h"
+#include "SFML/Graphics/RenderWindow.hpp"
 
 namespace ly
 {
@@ -14,6 +15,7 @@ namespace ly
         World(Application* owningApp);
         void BeginPlayInternal();
         void TickInternal(float deltaTime);
+        void Render(sf::RenderWindow& window);
         template<typename T>
         weak<T> SpawnActor();
         virtual ~World();

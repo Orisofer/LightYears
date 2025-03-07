@@ -34,13 +34,20 @@ namespace ly
             }
             else
             {
-                iter->get()->Tick(deltaTime);
+                iter->get()->TickInternal(deltaTime);
                 ++iter;
             }
+        }
+        Tick(deltaTime);
+    }
 
+    void World::Render(sf::RenderWindow &window)
+    {
+        for (shared<Actor>& actor : m_Actors)
+        {
+            actor->Render(window);
         }
 
-        Tick(deltaTime);
     }
 
     void World::BeginPlay()
