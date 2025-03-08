@@ -1,4 +1,6 @@
 #include "framework/Actor.h"
+
+#include "framework/AssetManager.h"
 #include "framework/Core.h"
 
 namespace ly
@@ -38,11 +40,14 @@ namespace ly
 
     void Actor::SetTexture(const std::string &texturePath)
     {
-        m_Texture.loadFromFile(texturePath);
-        m_Sprite.setTexture(m_Texture);
+        m_Texture = AssetManager::Get().LoadTexture(texturePath);
 
-        const int texWidth = m_Texture.getSize().x;
-        const int texHeight = m_Texture.getSize().y;
+        if (!m_Texture) return;
+
+        m_Sprite.setTexture(*m_Texture);
+
+        const int texWidth = m_Texture->getSize().x;
+        const int texHeight = m_Texture->getSize().y;
 
         m_Sprite.setTextureRect(sf::IntRect{sf::Vector2i{0,0}, sf::Vector2i{texWidth, texHeight}});
     }

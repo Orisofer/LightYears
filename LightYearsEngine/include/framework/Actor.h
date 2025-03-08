@@ -24,6 +24,6 @@ namespace ly
         World* m_OwningWorld;
         bool m_IsPlaying;
         sf::Sprite m_Sprite;
-        sf::Texture m_Texture;
+        shared<sf::Texture> m_Texture;
     };
 }
