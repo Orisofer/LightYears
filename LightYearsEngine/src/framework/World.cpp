@@ -12,6 +12,7 @@ namespace ly
         if (!m_Playing)
         {
             m_Playing = true;
+
             BeginPlay();
         }
     }
@@ -21,6 +22,7 @@ namespace ly
         for (shared<Actor> actor : m_PendingActors)
         {
             m_Actors.push_back(actor);
+
             actor->BeginPlayInternal();
         }
 
