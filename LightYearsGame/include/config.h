@@ -3,7 +3,7 @@
 
 #include <string>
 
-inline std::string GetResourceDirectory()
+std::string GetResourceDirectory()
 {
     // this is a pre process directive
     #ifdef NDEBUG // this is the release build - we want the assets from the build folder

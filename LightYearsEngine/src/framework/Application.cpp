@@ -12,10 +12,6 @@
 
 namespace ly
 {
-    Application::Application() : m_Window{sf::VideoMode(600,800),
-"Light Years"}, m_TargetFrameRate{60.0f}, m_TickClock{},
-    m_CurrentWorld{nullptr} {}
-
     Application::Application(unsigned int width, unsigned int height, std::string title, sf::Uint32 style)
     : m_Window{sf::VideoMode(width,height),title, style},
     m_TargetFrameRate{60.0f},

@@ -1,6 +1,5 @@
 #include "framework/Actor.h"
 
-#include "../../../LightYearsGame/include/config.h"
 #include "framework/AssetManager.h"
 #include "framework/Core.h"
 #include "framework/MathUtility.h"
@@ -10,7 +9,6 @@ namespace ly
     Actor::Actor(World* owningWorld, const std::string& texturePath) : m_OwningWorld{owningWorld}, m_IsPlaying(false),
     m_Sprite(), m_Texture()
     {
-        //SetTexture(texturePath);
     }
 
     void Actor::BeginPlayInternal()
@@ -96,7 +94,6 @@ namespace ly
     sf::Vector2f Actor::GetActorForwardDirection()
     {
         return ly::RotationToVector(GetRotation());
-
     }
 
     sf::Vector2f Actor::GetActorRightDirection()
