@@ -39,6 +39,22 @@ namespace ly
         return shared<sf::Texture>{nullptr};
     }
 
+    void AssetManager::CleanCycle()
+    {
+        for (auto iter = m_TextureMap.begin(); iter != m_TextureMap.end();)
+        {
+            if (iter->second.unique())
+            {
+                LOG("Cleaning texture %s", iter->first.c_str());
+                iter = m_TextureMap.erase(iter);
+            }
+            else
+            {
+                ++iter;
+            }
+        }
+    }
+
     AssetManager::AssetManager()
     {
     }

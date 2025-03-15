@@ -32,8 +32,10 @@ namespace ly
         virtual void Render();
         sf::RenderWindow m_Window;
         sf::Clock m_TickClock;
+        sf::Clock m_CleanCycleClock;
         shared<World> m_CurrentWorld;
         float m_TargetFrameRate;
+        float m_CleanCycleInterval;
     };
 
     template<typename T>

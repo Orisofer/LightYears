@@ -20,7 +20,19 @@ namespace ly
         virtual void Tick(float deltaTime);
         void SetTexture(const std::string& texturePath);
         void Render(sf::RenderWindow& window);
+
+        void SetActorLocation(const sf::Vector2f& location);
+        void SetActorRotation(float rotation);
+        void AddActorLocationOffset(const sf::Vector2f& offset);
+        void AddActorRotationOffset(float rotationOffset);
+        sf::Vector2f GetLocation();
+        float GetRotation();
+        sf::Vector2f GetActorForwardDirection();
+        sf::Vector2f GetActorRightDirection();
+
     private:
+        void CenterPivot();
+
         World* m_OwningWorld;
         bool m_IsPlaying;
         sf::Sprite m_Sprite;

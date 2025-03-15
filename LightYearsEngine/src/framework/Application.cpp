@@ -8,6 +8,7 @@
 #include "framework/Application.h"
 #include "framework/Core.h"
 #include "framework/World.h"
+#include "framework/AssetManager.h"
 
 namespace ly
 {
@@ -15,8 +16,16 @@ namespace ly
 "Light Years"}, m_TargetFrameRate{60.0f}, m_TickClock{},
     m_CurrentWorld{nullptr} {}
 
-    Application::Application(unsigned int width, unsigned int height, std::string title, sf::Uint32 style) : m_Window{sf::VideoMode(width,height),
-title, style}, m_TargetFrameRate{60.0f}, m_TickClock{}, m_CurrentWorld{nullptr} {}
+    Application::Application(unsigned int width, unsigned int height, std::string title, sf::Uint32 style)
+    : m_Window{sf::VideoMode(width,height),title, style},
+    m_TargetFrameRate{60.0f},
+    m_TickClock{},
+    m_CurrentWorld{nullptr},
+    m_CleanCycleClock{},
+    m_CleanCycleInterval{2.f}
+    {
+
+    }
 
     void Application::Run()
     {
@@ -58,6 +67,12 @@ title, style}, m_TargetFrameRate{60.0f}, m_TickClock{}, m_CurrentWorld{nullptr} 
         {
             m_CurrentWorld->BeginPlayInternal();
             m_CurrentWorld->TickInternal(deltaTime);
+        }
+
+        if (m_CleanCycleClock.getElapsedTime().asMicroseconds() >= m_CleanCycleInterval)
+        {
+            m_CleanCycleClock.restart();
+            AssetManager::Get().CleanCycle();
         }
     }
 
