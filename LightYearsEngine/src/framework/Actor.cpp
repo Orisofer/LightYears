@@ -9,6 +9,7 @@ namespace ly
     Actor::Actor(World* owningWorld, const std::string& texturePath) : m_OwningWorld{owningWorld}, m_IsPlaying(false),
     m_Sprite(), m_Texture()
     {
+        SetTexture(texturePath);
     }
 
     void Actor::BeginPlayInternal()
