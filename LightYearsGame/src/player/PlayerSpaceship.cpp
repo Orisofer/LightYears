@@ -6,6 +6,7 @@
 
 #include "player/PlayerSpaceship.h"
 #include "framework/MathUtility.h"
+#include "framework/World.h"
 
 namespace ly
 {
@@ -54,12 +55,43 @@ namespace ly
             m_MoveInput.x += 1.f;
         }
 
+        ClampInputOnEdge();
         NormalizeInput();
     }
 
     void PlayerSpaceship::NormalizeInput()
     {
         Normalize<float>(m_MoveInput);
+    }
+
+    void PlayerSpaceship::ClampInputOnEdge()
+    {
+        sf::Vector2u worldSize = m_OwningWorld->GetWindowSize();
+        sf::Vector2u spaceShipSize = GetSize();
+        sf::Vector2f spaceshipPos = GetLocation();
+
+        float halfSizeX = spaceShipSize.x * 0.5f;
+        float halfSizeY = spaceShipSize.y * 0.5f;
+
+        if (spaceshipPos.x < 0.f + halfSizeX && m_MoveInput.x == -1.f)
+        {
+            m_MoveInput.x = 0.f;
+        }
+
+        if (spaceshipPos.y < 0.f + halfSizeY && m_MoveInput.y == -1.f)
+        {
+            m_MoveInput.y = 0.f;
+        }
+
+        if (spaceshipPos.x > worldSize.x - halfSizeX && m_MoveInput.x == 1.f)
+        {
+            m_MoveInput.x = 0.f;
+        }
+
+        if (spaceshipPos.y > worldSize.y - halfSizeY && m_MoveInput.y == 1.f)
+        {
+            m_MoveInput.y = 0.f;
+        }
     }
 
     void PlayerSpaceship::ConsumeInput(float deltaTime)

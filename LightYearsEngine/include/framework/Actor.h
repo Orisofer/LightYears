@@ -25,15 +25,17 @@ namespace ly
         void SetActorRotation(float rotation);
         void AddActorLocationOffset(const sf::Vector2f& offset);
         void AddActorRotationOffset(float rotationOffset);
-        sf::Vector2f GetLocation();
         float GetRotation();
+        sf::Vector2f GetLocation();
         sf::Vector2f GetActorForwardDirection();
         sf::Vector2f GetActorRightDirection();
+        sf::Vector2u GetSize() const;
+
+    protected:
+        World* m_OwningWorld;
 
     private:
         void CenterPivot();
-
-        World* m_OwningWorld;
         bool m_IsPlaying;
         sf::Sprite m_Sprite;
         shared<sf::Texture> m_Texture;

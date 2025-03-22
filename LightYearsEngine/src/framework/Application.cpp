@@ -97,4 +97,9 @@ namespace ly
         LOG("Application destructor called");
         m_Window.close();
     }
+
+    sf::Vector2u Application::GetWindowSize() const
+    {
+        return m_Window.getSize();
+    }
 }

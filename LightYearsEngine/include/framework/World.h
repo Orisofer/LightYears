@@ -19,6 +19,7 @@ namespace ly
         template<typename T>
         weak<T> SpawnActor();
         virtual ~World();
+        sf::Vector2u GetWindowSize() const;
     private:
         virtual void BeginPlay();
         virtual void Tick(float deltaTime);

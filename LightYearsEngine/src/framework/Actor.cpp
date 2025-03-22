@@ -102,6 +102,11 @@ namespace ly
         return ly::RotationToVector(GetRotation() + 90.f);
     }
 
+    sf::Vector2u Actor::GetSize() const
+    {
+        return m_Texture->getSize();
+    }
+
     void Actor::CenterPivot()
     {
         sf::FloatRect bounds = m_Sprite.getGlobalBounds();
