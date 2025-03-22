@@ -5,6 +5,7 @@
 #include <SFML/System.hpp>
 
 #include "player/PlayerSpaceship.h"
+#include "framework/MathUtility.h"
 
 namespace ly
 {
@@ -52,6 +53,13 @@ namespace ly
         {
             m_MoveInput.x += 1.f;
         }
+
+        NormalizeInput();
+    }
+
+    void PlayerSpaceship::NormalizeInput()
+    {
+        Normalize<float>(m_MoveInput);
     }
 
     void PlayerSpaceship::ConsumeInput(float deltaTime)
