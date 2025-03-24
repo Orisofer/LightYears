@@ -15,6 +15,7 @@ namespace ly
         Spaceship(World* owningWorld, const std::string& texturePath = "");
         virtual void Tick(float deltaTime) override;
         void SetVelocity(const sf::Vector2f &velocity);
+        virtual void Shoot();
         sf::Vector2f GetVelocity() const;
     private:
         sf::Vector2f m_Velocity;

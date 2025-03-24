@@ -6,6 +6,8 @@
 #define PLAYERSPACESHIP_H
 
 #include "spaceship/Spaceship.h"
+#include "framework/Core.h"
+#include "weapon/BulletShooter.h"
 
 namespace ly
 {
@@ -16,6 +18,7 @@ namespace ly
         virtual void Tick(float deltaTime) override;
         void SetSpeed(float speed);
         float GetSpeed() const;
+        void Shoot() override;
     private:
         void HandleInput();
         void NormalizeInput();
@@ -24,6 +27,8 @@ namespace ly
 
         sf::Vector2f m_MoveInput;
         float m_MoveSpeed;
+
+        std::unique_ptr<BulletShooter> m_BulletShooter;
     };
 }
 

@@ -22,6 +22,10 @@ namespace ly
         m_Velocity = velocity;
     }
 
+    void Spaceship::Shoot()
+    {
+    }
+
     sf::Vector2f Spaceship::GetVelocity() const
     {
         return m_Velocity;

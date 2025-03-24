@@ -11,7 +11,10 @@
 namespace ly
 {
     PlayerSpaceship::PlayerSpaceship(World *owningWorld, const std::string &texturePath)
-        : Spaceship{owningWorld, texturePath}, m_MoveInput{}, m_MoveSpeed{200.f}
+    : Spaceship{owningWorld, texturePath},
+    m_MoveInput{},
+    m_MoveSpeed{200.f},
+    m_BulletShooter{std::make_unique<BulletShooter>(this)}
     {
 
     }
@@ -31,6 +34,14 @@ namespace ly
     float PlayerSpaceship::GetSpeed() const
     {
         return m_MoveSpeed;
+    }
+
+    void PlayerSpaceship::Shoot()
+    {
+        if (m_BulletShooter)
+        {
+            m_BulletShooter->Shoot();
+        }
     }
 
     void PlayerSpaceship::HandleInput()
@@ -57,6 +68,11 @@ namespace ly
 
         ClampInputOnEdge();
         NormalizeInput();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            Shoot();
+        }
     }
 
     void PlayerSpaceship::NormalizeInput()
