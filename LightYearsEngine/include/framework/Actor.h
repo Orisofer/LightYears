@@ -31,6 +31,7 @@ namespace ly
         sf::Vector2f GetActorRightDirection();
         sf::Vector2u GetSize() const;
 
+        World* GetWorld() const;
     protected:
         World* m_OwningWorld;
 

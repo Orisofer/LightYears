@@ -92,10 +92,16 @@ namespace ly
         return m_Sprite.getRotation();
     }
 
+    // the +90.f and -90.f corrections are compensation
+    // because for some reason when loading textures everything is flipped 90
+    // degrees to the right
+
     sf::Vector2f Actor::GetActorForwardDirection()
     {
-        return ly::RotationToVector(GetRotation());
+        return ly::RotationToVector(GetRotation() + 270.f);
     }
+
+    // also here
 
     sf::Vector2f Actor::GetActorRightDirection()
     {
@@ -105,6 +111,11 @@ namespace ly
     sf::Vector2u Actor::GetSize() const
     {
         return m_Texture->getSize();
+    }
+
+    World * Actor::GetWorld() const
+    {
+        return m_OwningWorld;
     }
 
     void Actor::CenterPivot()

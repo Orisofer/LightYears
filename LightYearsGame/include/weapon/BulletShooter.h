@@ -14,7 +14,7 @@ namespace ly
     class BulletShooter : public Shooter
     {
     public:
-        BulletShooter(Actor* owner, float coolDownTime = 1.0f);
+        BulletShooter(Actor* owner, float coolDownTime = 0.1f);
         bool IsOnCooldown() const override;
         bool CanShoot() const override;
         ~BulletShooter() = default;

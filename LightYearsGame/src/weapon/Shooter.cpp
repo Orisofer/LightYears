@@ -29,7 +29,7 @@ namespace ly
         return false;
     }
 
-    Actor* Shooter::GetActor() const
+    Actor * Shooter::GetOwner() const
     {
         return m_Owner;
     }
