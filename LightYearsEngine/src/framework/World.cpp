@@ -29,18 +29,12 @@ namespace ly
 
         m_PendingActors.clear();
 
-        for (auto iter = m_Actors.begin(); iter != m_Actors.end(); )
+        for (auto iter = m_Actors.begin(); iter != m_Actors.end();)
         {
-            if (iter->get()->IsPendingDestroyed())
-            {
-                iter = m_Actors.erase(iter);
-            }
-            else
-            {
-                iter->get()->TickInternal(deltaTime);
-                ++iter;
-            }
+            iter->get()->TickInternal(deltaTime);
+            ++iter;
         }
+
         Tick(deltaTime);
     }
 
@@ -51,6 +45,21 @@ namespace ly
             actor->Render(window);
         }
 
+    }
+
+    void World::CleanCycle()
+    {
+        for (auto iter = m_Actors.begin(); iter != m_Actors.end();)
+        {
+            if (iter->get()->IsPendingDestroyed())
+            {
+                iter = m_Actors.erase(iter);
+            }
+            else
+            {
+                ++iter;
+            }
+        }
     }
 
     void World::BeginPlay()

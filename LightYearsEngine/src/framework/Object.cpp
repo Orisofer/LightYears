@@ -8,7 +8,6 @@ namespace ly
     void Object::Destroy()
     {
         m_IsPendingDestroyed = true;
-        LOG("Object marked for destruction");
     }
 
     bool Object::IsPendingDestroyed() const

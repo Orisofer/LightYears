@@ -65,10 +65,15 @@ namespace ly
             m_CurrentWorld->TickInternal(deltaTime);
         }
 
-        if (m_CleanCycleClock.getElapsedTime().asMicroseconds() >= m_CleanCycleInterval)
+        if (m_CleanCycleClock.getElapsedTime().asSeconds() >= m_CleanCycleInterval)
         {
             m_CleanCycleClock.restart();
             AssetManager::Get().CleanCycle();
+
+            if (m_CurrentWorld)
+            {
+                m_CurrentWorld->CleanCycle();
+            }
         }
     }
 

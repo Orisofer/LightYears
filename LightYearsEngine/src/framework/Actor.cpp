@@ -3,6 +3,7 @@
 #include "framework/AssetManager.h"
 #include "framework/Core.h"
 #include "framework/MathUtility.h"
+#include "framework/World.h"
 
 namespace ly
 {
@@ -82,7 +83,7 @@ namespace ly
         SetActorRotation(GetRotation() + rotationOffset);
     }
 
-    sf::Vector2f Actor::GetLocation()
+    sf::Vector2f Actor::GetLocation() const
     {
         return m_Sprite.getPosition();
     }
@@ -108,6 +109,11 @@ namespace ly
         return ly::RotationToVector(GetRotation() + 90.f);
     }
 
+    sf::FloatRect Actor::GetActorGlobalBounds() const
+    {
+        return m_Sprite.getGlobalBounds();
+    }
+
     sf::Vector2u Actor::GetSize() const
     {
         return m_Texture->getSize();
@@ -116,6 +122,40 @@ namespace ly
     World * Actor::GetWorld() const
     {
         return m_OwningWorld;
+    }
+
+    bool Actor::IsActorOutOfWindowBounds() const
+    {
+        float windowWidth = GetWorld()->GetWindowSize().x;
+        float windowHeight = GetWorld()->GetWindowSize().y;
+
+        float actorWidth = GetActorGlobalBounds().width;
+        float actorHeight = GetActorGlobalBounds().height;
+
+        float actorPositionX = GetLocation().x;
+        float actorPositionY = GetLocation().y;
+
+        if (actorPositionX + (actorWidth * 0.5f) > windowWidth)
+        {
+            return true;
+        }
+
+        if (actorPositionX + (actorWidth * 0.5f) < 0)
+        {
+            return true;
+        }
+
+        if (actorPositionY + (actorHeight * 0.5f) > windowHeight)
+        {
+            return true;
+        }
+
+        if (actorPositionY +  (actorHeight * 0.5f) < 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     void Actor::CenterPivot()

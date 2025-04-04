@@ -26,12 +26,15 @@ namespace ly
         void AddActorLocationOffset(const sf::Vector2f& offset);
         void AddActorRotationOffset(float rotationOffset);
         float GetRotation();
-        sf::Vector2f GetLocation();
+        sf::Vector2f GetLocation() const;
         sf::Vector2f GetActorForwardDirection();
         sf::Vector2f GetActorRightDirection();
+        sf::FloatRect GetActorGlobalBounds() const;
         sf::Vector2u GetSize() const;
 
         World* GetWorld() const;
+
+        bool IsActorOutOfWindowBounds() const;
     protected:
         World* m_OwningWorld;
 

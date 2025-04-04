@@ -16,6 +16,7 @@ namespace ly
         void BeginPlayInternal();
         void TickInternal(float deltaTime);
         void Render(sf::RenderWindow& window);
+        void CleanCycle();
 
         template<typename T, typename... Args>
         weak<T> SpawnActor(Args... args);
