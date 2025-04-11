@@ -9,6 +9,7 @@
 #include "framework/Core.h"
 #include "framework/World.h"
 #include "framework/AssetManager.h"
+#include "framework/PhysicsSystem.h"
 
 namespace ly
 {
@@ -59,11 +60,15 @@ namespace ly
     {
         Tick(deltaTime);
 
+        // ticking the world logic (kind of like update in unity)
         if (m_CurrentWorld)
         {
             m_CurrentWorld->BeginPlayInternal();
             m_CurrentWorld->TickInternal(deltaTime);
         }
+
+        // ticking the physics logic (kind of like fixed update in unity)
+        PhysicsSystem::Get().Step(deltaTime);
 
         if (m_CleanCycleClock.getElapsedTime().asSeconds() >= m_CleanCycleInterval)
         {

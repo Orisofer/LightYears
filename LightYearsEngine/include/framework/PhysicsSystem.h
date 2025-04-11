@@ -6,21 +6,27 @@
 #define PHYSICSSYSTEM_H
 
 #include <box2d/b2_world.h>
-
 #include "Core.h"
 
 namespace ly
 {
+    class Actor;
+
     class PhysicsSystem
     {
     public:
         static PhysicsSystem& Get();
+        void Step(float deltaTime);
+        b2Body* AddListener(Actor* listener);
+        float GetPhysicsScale() const;
     protected:
         PhysicsSystem();
     private:
         static unique<PhysicsSystem> m_PhysicsSystem;
         b2World m_PhysicsWorld;
         float m_PhysicsScale;
+        int m_VelocityIterations;
+        int m_PositionIterations;
     };
 }
 
