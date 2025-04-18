@@ -1,14 +1,16 @@
-#include "framework/Actor.h"
+#include <box2d/b2_body.h>
 
+#include "framework/Actor.h"
 #include "framework/AssetManager.h"
 #include "framework/Core.h"
 #include "framework/MathUtility.h"
 #include "framework/World.h"
+#include "framework/PhysicsSystem.h"
 
 namespace ly
 {
     Actor::Actor(World* owningWorld, const std::string& texturePath) : m_OwningWorld{owningWorld}, m_IsPlaying(false),
-    m_Sprite(), m_Texture()
+    m_Sprite(), m_Texture(), m_PhysicsBody(nullptr), m_PhysicsEnabled(false)
     {
         SetTexture(texturePath);
     }
@@ -162,6 +164,48 @@ namespace ly
     {
         sf::FloatRect bounds = m_Sprite.getGlobalBounds();
         m_Sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    }
+
+    void Actor::UpdatePhysicsBodyTransform()
+    {
+        if (m_PhysicsBody)
+        {
+            float physicsScale = PhysicsSystem::Get().GetPhysicsScale();
+            b2Vec2 pos{GetLocation().x * physicsScale, GetLocation().y * physicsScale};
+            float rotation = DegreesToRadians(GetRotation());
+
+            m_PhysicsBody->SetTransform(pos, rotation);
+        }
+    }
+
+    void Actor::SetEnablePhysics(bool enable)
+    {
+        m_PhysicsEnabled = enable;
+
+        if (enable)
+        {
+            InitializePhysics();
+        }
+        else
+        {
+            UnInitializePhysics();
+        }
+    }
+
+    void Actor::InitializePhysics()
+    {
+        if (!m_PhysicsBody)
+        {
+            m_PhysicsBody = PhysicsSystem::Get().AddListener(this);
+        }
+    }
+
+    void Actor::UnInitializePhysics()
+    {
+        if (m_PhysicsBody)
+        {
+            PhysicsSystem::Get().RemoveListener(m_PhysicsBody);
+        }
     }
 
     Actor::~Actor()

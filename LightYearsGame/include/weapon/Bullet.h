@@ -13,6 +13,7 @@ namespace ly
     public:
         Bullet(World* world, Actor* owner, const std::string& texturePath, float speed = 800.f, float damage = 10.f);
 
+        virtual void BeginPlay() override;
         void Tick(float deltaTime) override;
 
         void SetSpeed(float speed);

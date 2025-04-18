@@ -50,7 +50,7 @@ namespace ly
 
         bodyDef.angle = listenerAngle;
 
-        b2Body* body = m_PhysicsWorld.CreateBody(&bodyDef);
+        b2Body *body = m_PhysicsWorld.CreateBody(&bodyDef);
 
         b2PolygonShape shape;
 
@@ -74,6 +74,11 @@ namespace ly
     float PhysicsSystem::GetPhysicsScale() const
     {
         return m_PhysicsScale;
+    }
+
+    void PhysicsSystem::RemoveListener(b2Body* toRemove)
+    {
+        //TODO: IMPLEMENT REMOVE LISTENER
     }
 
     PhysicsSystem::PhysicsSystem() :
