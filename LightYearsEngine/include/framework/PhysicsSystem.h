@@ -12,14 +12,19 @@ namespace ly
 {
     class Actor;
 
+    class PhysicsContactListener : public b2ContactListener
+    {
+        virtual void BeginContact(b2Contact* contact) override;
+        virtual void EndContact(b2Contact* contact) override;
+    };
+
     class PhysicsSystem
     {
     public:
         static PhysicsSystem& Get();
         void Step(float deltaTime);
-        b2Body* AddListener(Actor* listener);
         float GetPhysicsScale() const;
-
+        b2Body* AddListener(Actor* listener);
         void RemoveListener(b2Body* toRemove);
 
     protected:
@@ -30,6 +35,7 @@ namespace ly
         float m_PhysicsScale;
         int m_VelocityIterations;
         int m_PositionIterations;
+        PhysicsContactListener m_ContactListener;
     };
 }
 

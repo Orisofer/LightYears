@@ -5,6 +5,7 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_polygon_shape.h>
 #include <box2d/b2_fixture.h>
+#include <box2d/b2_contact.h>
 
 #include "framework/PhysicsSystem.h"
 #include "framework/Actor.h"
@@ -85,7 +86,55 @@ namespace ly
     m_PhysicsWorld(b2Vec2{0.f,0.f}),
     m_PhysicsScale(.01f),
     m_PositionIterations(8),
-    m_VelocityIterations(3)
+    m_VelocityIterations(3),
+    m_ContactListener()
     {
+        m_PhysicsWorld.SetContactListener(&m_ContactListener);
+        m_PhysicsWorld.SetAllowSleeping(false);
+    }
+
+    // this two methods are like colliders in Unity, we provide a listener class
+    // that can catch the collisions data. We override these functions to retrieve the collision
+    // data
+    void PhysicsContactListener::BeginContact(b2Contact *contact)
+    {
+        Actor* actorA = reinterpret_cast<Actor*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+        Actor* actorB = reinterpret_cast<Actor*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+
+        if (actorA && !actorA->IsPendingDestroyed())
+        {
+            actorA->OnActorBeginOverlap(actorB);
+        }
+
+        if (actorB && !actorB->IsPendingDestroyed())
+        {
+            actorB->OnActorBeginOverlap(actorA);
+        }
+    }
+
+    void PhysicsContactListener::EndContact(b2Contact *contact)
+    {
+        Actor* actorA = nullptr;
+        Actor* actorB = nullptr;
+
+        if (contact->GetFixtureA() && contact->GetFixtureA()->GetBody())
+        {
+            actorA = reinterpret_cast<Actor*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+        }
+
+        if (contact->GetFixtureB() && contact->GetFixtureB()->GetBody())
+        {
+            actorB = reinterpret_cast<Actor*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+        }
+
+        if (actorA && !actorA->IsPendingDestroyed())
+        {
+            actorA->OnActorEndOverlap(actorB);
+        }
+
+        if (actorB && !actorB->IsPendingDestroyed())
+        {
+            actorB->OnActorEndOverlap(actorA);
+        }
     }
 }

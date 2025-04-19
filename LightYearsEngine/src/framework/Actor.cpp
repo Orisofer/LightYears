@@ -68,11 +68,13 @@ namespace ly
     void Actor::SetActorLocation(const sf::Vector2f &location)
     {
         m_Sprite.setPosition(location);
+        UpdatePhysicsBodyTransform();
     }
 
     void Actor::SetActorRotation(float rotation)
     {
         m_Sprite.setRotation(rotation);
+        UpdatePhysicsBodyTransform();
     }
 
     void Actor::AddActorLocationOffset(const sf::Vector2f &offset)
@@ -98,14 +100,12 @@ namespace ly
     // the +90.f and -90.f corrections are compensation
     // because for some reason when loading textures everything is flipped 90
     // degrees to the right
-
     sf::Vector2f Actor::GetActorForwardDirection()
     {
         return ly::RotationToVector(GetRotation() + 270.f);
     }
 
     // also here
-
     sf::Vector2f Actor::GetActorRightDirection()
     {
         return ly::RotationToVector(GetRotation() + 90.f);
@@ -206,6 +206,16 @@ namespace ly
         {
             PhysicsSystem::Get().RemoveListener(m_PhysicsBody);
         }
+    }
+
+    void Actor::OnActorBeginOverlap(Actor *actor)
+    {
+        LOG("Overlap begin");
+    }
+
+    void Actor::OnActorEndOverlap(Actor *other)
+    {
+        LOG("Overlap finished");
     }
 
     Actor::~Actor()
