@@ -27,16 +27,25 @@ namespace ly
         b2Body* AddListener(Actor* listener);
         void RemoveListener(b2Body* toRemove);
 
+        static void CleanUp();
+
     protected:
         PhysicsSystem();
     private:
+        void ProcessPendingRemoveListeners();
         static unique<PhysicsSystem> m_PhysicsSystem;
         b2World m_PhysicsWorld;
         float m_PhysicsScale;
         int m_VelocityIterations;
         int m_PositionIterations;
         PhysicsContactListener m_ContactListener;
+        Set<b2Body*> m_PendingRemoveListeners;
     };
+
+    inline void PhysicsSystem::CleanUp()
+    {
+        m_PhysicsSystem = std::move(unique<PhysicsSystem>());
+    }
 }
 
 #endif //PHYSICSSYSTEM_H

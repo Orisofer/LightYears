@@ -12,7 +12,10 @@ namespace ly
     Actor::Actor(World* owningWorld, const std::string& texturePath) : m_OwningWorld{owningWorld}, m_IsPlaying(false),
     m_Sprite(), m_Texture(), m_PhysicsBody(nullptr), m_PhysicsEnabled(false)
     {
-        SetTexture(texturePath);
+        if (!texturePath.empty())
+        {
+            SetTexture(texturePath);
+        }
     }
 
     void Actor::BeginPlayInternal()
@@ -205,6 +208,7 @@ namespace ly
         if (m_PhysicsBody)
         {
             PhysicsSystem::Get().RemoveListener(m_PhysicsBody);
+            m_PhysicsBody = nullptr;
         }
     }
 
@@ -216,6 +220,12 @@ namespace ly
     void Actor::OnActorEndOverlap(Actor *other)
     {
         LOG("Overlap finished");
+    }
+
+    void Actor::Destroy()
+    {
+        UnInitializePhysics();
+        Object::Destroy();
     }
 
     Actor::~Actor()

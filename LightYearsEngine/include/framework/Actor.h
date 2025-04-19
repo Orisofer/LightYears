@@ -43,6 +43,8 @@ namespace ly
         virtual void OnActorBeginOverlap(Actor * other);
         virtual void OnActorEndOverlap(Actor * other);
 
+        void Destroy() override;
+
     protected:
         World* m_OwningWorld;
 

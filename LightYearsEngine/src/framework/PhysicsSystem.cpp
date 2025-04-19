@@ -29,6 +29,8 @@ namespace ly
 
     void PhysicsSystem::Step(float deltaTime)
     {
+        ProcessPendingRemoveListeners();
+
         m_PhysicsWorld.Step(deltaTime, m_VelocityIterations, m_PositionIterations);
     }
 
@@ -79,7 +81,7 @@ namespace ly
 
     void PhysicsSystem::RemoveListener(b2Body* toRemove)
     {
-        //TODO: IMPLEMENT REMOVE LISTENER
+        m_PendingRemoveListeners.insert(toRemove);
     }
 
     PhysicsSystem::PhysicsSystem() :
@@ -87,14 +89,25 @@ namespace ly
     m_PhysicsScale(.01f),
     m_PositionIterations(8),
     m_VelocityIterations(3),
-    m_ContactListener()
+    m_ContactListener(),
+    m_PendingRemoveListeners()
     {
         m_PhysicsWorld.SetContactListener(&m_ContactListener);
         m_PhysicsWorld.SetAllowSleeping(false);
     }
 
+    void PhysicsSystem::ProcessPendingRemoveListeners()
+    {
+        for (auto listener : m_PendingRemoveListeners)
+        {
+            m_PhysicsWorld.DestroyBody(listener);
+        }
+
+        m_PendingRemoveListeners.clear();
+    }
+
     // this two methods are like colliders in Unity, we provide a listener class
-    // that can catch the collisions data. We override these functions to retrieve the collision
+    // that can catch the collision's data. We override these functions to retrieve the collision
     // data
     void PhysicsContactListener::BeginContact(b2Contact *contact)
     {

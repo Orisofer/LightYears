@@ -11,6 +11,8 @@
 #include <cstdio>
 #include <memory>
 #include <map>
+#include <unordered_map>
+#include <unordered_set>
 
 namespace ly
 {
@@ -34,6 +36,9 @@ namespace ly
 
     template<typename Tkey, typename Tvalue, typename Thasher = std::hash<Tkey>>
     using Dictionary = std::unordered_map<Tkey, Tvalue, Thasher>;
+
+    template<typename T>
+    using Set = std::unordered_set<T>;
 }
 
 #endif /* Core_hpp */
