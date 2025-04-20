@@ -20,6 +20,7 @@ namespace ly
         virtual void Shoot();
         sf::Vector2f GetVelocity() const;
     private:
+        void OnHealthChanged(float amt, float health, float maxHealth);
         sf::Vector2f m_Velocity;
         HealthComponent m_HealthComp;
     };

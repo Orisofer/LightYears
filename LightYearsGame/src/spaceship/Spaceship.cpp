@@ -18,6 +18,9 @@ namespace ly
     {
         Actor::BeginPlay();
         SetEnablePhysics(true);
+        m_HealthComp.onHealthChanged.BindAction(GetWeakRef(), &Spaceship::OnHealthChanged);
+
+        m_HealthComp.ChangeHealth(-88);
     }
 
     void Spaceship::Tick(float deltaTime)
@@ -38,5 +41,10 @@ namespace ly
     sf::Vector2f Spaceship::GetVelocity() const
     {
         return m_Velocity;
+    }
+
+    void Spaceship::OnHealthChanged(float amt, float health, float maxHealth)
+    {
+        LOG("on health changed: amount: %f, health: %f / %f", amt, health, maxHealth);
     }
 }

@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "framework/Core.h"
+#include "framework/Delegate.h"
 
 namespace ly
 {
@@ -14,6 +15,7 @@ namespace ly
         bool IsPendingDestroyed() const;
         weak<Object> GetWeakRef();
         weak<const Object> GetWeakRef() const;
+        Delegate<Object*> onDestroy;
         virtual ~Object();
     private:
         bool m_IsPendingDestroyed;

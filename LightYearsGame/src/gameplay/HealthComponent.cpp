@@ -44,6 +44,8 @@ namespace ly
         {
             Heal(amt);
         }
+
+        onHealthChanged.Broadcast(amt, m_Health, m_MaxHealth);
     }
 
     float HealthComponent::GetHealth()

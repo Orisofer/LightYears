@@ -5,6 +5,8 @@
 #ifndef HEALTHCOMPONENT_H
 #define HEALTHCOMPONENT_H
 
+#include "framework/Delegate.h"
+
 namespace ly
 {
     class HealthComponent
@@ -14,6 +16,7 @@ namespace ly
         void ChangeHealth(float amt);
         float GetHealth();
         float GetMaxHealth();
+        Delegate<float, float, float> onHealthChanged;
     private:
         void TakeDamage(float amt);
         void Heal(float amt);
