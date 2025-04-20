@@ -12,7 +12,7 @@ namespace ly
         m_Speed(speed),
         m_Damage(damage)
     {
-
+        SetTeamID(owner->GetTeamID());
     }
 
     void Bullet::BeginPlay()
@@ -43,8 +43,27 @@ namespace ly
         m_Damage = damage;
     }
 
+    float Bullet::GetDamage() const
+    {
+        return m_Damage;
+    }
+
     void Bullet::Move(float deltaTime)
     {
         AddActorLocationOffset(GetActorForwardDirection() * m_Speed * deltaTime);
+    }
+
+    void Bullet::OnActorBeginOverlap(Actor *other)
+    {
+        if (IsOtherHostile(other))
+        {
+            other->ApplyDamage(GetDamage());
+            Destroy();
+        }
+    }
+
+    void Bullet::OnActorEndOverlap(Actor *other)
+    {
+
     }
 }

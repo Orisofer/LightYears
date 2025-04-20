@@ -39,6 +39,8 @@ namespace ly
 
     template<typename T>
     using Set = std::unordered_set<T>;
+
+    using uint8 = unsigned char;
 }
 
 #endif /* Core_hpp */

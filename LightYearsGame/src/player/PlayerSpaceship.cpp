@@ -16,7 +16,8 @@ namespace ly
     m_MoveSpeed{200.f},
     m_BulletShooter{std::make_unique<BulletShooter>(this)}
     {
-
+        // this works like a layer mask for collision detection filtering
+        SetTeamID(1);
     }
 
     void PlayerSpaceship::Tick(float deltaTime)

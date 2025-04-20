@@ -28,11 +28,18 @@ namespace ly
         void AddActorLocationOffset(const sf::Vector2f& offset);
         void AddActorRotationOffset(float rotationOffset);
         float GetRotation();
+
         sf::Vector2f GetLocation() const;
         sf::Vector2f GetActorForwardDirection();
         sf::Vector2f GetActorRightDirection();
         sf::FloatRect GetActorGlobalBounds() const;
         sf::Vector2u GetSize() const;
+
+        void SetTeamID(uint8 teamID);
+        uint8 GetTeamID() const;
+        bool IsOtherHostile(Actor* other) const;
+
+        virtual void ApplyDamage(float damage);
 
         World* GetWorld() const;
 
@@ -44,6 +51,8 @@ namespace ly
         virtual void OnActorEndOverlap(Actor * other);
 
         void Destroy() override;
+
+        static uint8 GetNeutralTeamID();
 
     protected:
         World* m_OwningWorld;
@@ -58,5 +67,13 @@ namespace ly
         shared<sf::Texture> m_Texture;
         b2Body* m_PhysicsBody;
         bool m_PhysicsEnabled;
+        uint8 m_TeamID;
+
+        const static uint8 s_NeutralTeamID = 255;
     };
+
+    inline void Actor::ApplyDamage(float damage)
+    {
+        // no-op
+    }
 }

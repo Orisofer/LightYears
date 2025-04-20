@@ -35,7 +35,7 @@ namespace ly
         {
             TakeDamage(-amt);
 
-            if (m_Health < 0)
+            if (m_Health <= 0)
             {
                 HealthEmpty();
             }
@@ -60,17 +60,17 @@ namespace ly
 
     void HealthComponent::TakeDamage(float amt)
     {
-        LOG("taking damage %f. health: %f / %f", amt, m_Health, m_MaxHealth);
+        onTakenDamage.Broadcast(amt, m_Health, m_MaxHealth);
     }
 
     void HealthComponent::Heal(float amt)
     {
-        LOG("healing %f. health: %f / %f", amt, m_Health, m_MaxHealth);
+        onTakenDamage.Broadcast(amt, m_Health, m_MaxHealth);
     }
 
     void HealthComponent::HealthEmpty()
     {
-        LOG("dead");
+        onHealthEmpty.Broadcast();
     }
 
 }

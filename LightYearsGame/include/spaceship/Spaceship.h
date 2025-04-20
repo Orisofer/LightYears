@@ -19,8 +19,11 @@ namespace ly
         void SetVelocity(const sf::Vector2f &velocity);
         virtual void Shoot();
         sf::Vector2f GetVelocity() const;
+        virtual void ApplyDamage(float damage) override;
     private:
-        void OnHealthChanged(float amt, float health, float maxHealth);
+        virtual void OnHealthChanged(float amt, float health, float maxHealth);
+        virtual void OnTakenDamage(float amt, float health, float maxHealth);
+        virtual void Blow();
         sf::Vector2f m_Velocity;
         HealthComponent m_HealthComp;
     };

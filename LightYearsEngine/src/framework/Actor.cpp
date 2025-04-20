@@ -9,8 +9,14 @@
 
 namespace ly
 {
-    Actor::Actor(World* owningWorld, const std::string& texturePath) : m_OwningWorld{owningWorld}, m_IsPlaying(false),
-    m_Sprite(), m_Texture(), m_PhysicsBody(nullptr), m_PhysicsEnabled(false)
+    Actor::Actor(World* owningWorld, const std::string& texturePath) :
+    m_OwningWorld{owningWorld},
+    m_IsPlaying(false),
+    m_Sprite(),
+    m_Texture(),
+    m_PhysicsBody(nullptr),
+    m_PhysicsEnabled(false),
+    m_TeamID(GetNeutralTeamID())
     {
         if (!texturePath.empty())
         {
@@ -124,6 +130,31 @@ namespace ly
         return m_Texture->getSize();
     }
 
+    void Actor::SetTeamID(uint8 teamID)
+    {
+        m_TeamID = teamID;
+    }
+
+    uint8 Actor::GetNeutralTeamID()
+    {
+        return s_NeutralTeamID;
+    }
+
+    bool Actor::IsOtherHostile(Actor *other) const
+    {
+        if (GetTeamID() == GetNeutralTeamID() || other->GetTeamID() == GetNeutralTeamID())
+        {
+            return false;
+        }
+
+        return GetTeamID() != other->GetTeamID();
+    }
+
+    uint8 Actor::GetTeamID() const
+    {
+        return m_TeamID;
+    }
+
     World * Actor::GetWorld() const
     {
         return m_OwningWorld;
@@ -214,12 +245,10 @@ namespace ly
 
     void Actor::OnActorBeginOverlap(Actor *actor)
     {
-        LOG("Overlap begin");
     }
 
     void Actor::OnActorEndOverlap(Actor *other)
     {
-        LOG("Overlap finished");
     }
 
     void Actor::Destroy()
