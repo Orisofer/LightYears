@@ -6,6 +6,7 @@
 #define SPACESHIP_H
 
 #include "framework/Actor.h"
+#include "gameplay/HealthComponent.h"
 
 namespace ly
 {
@@ -20,6 +21,7 @@ namespace ly
         sf::Vector2f GetVelocity() const;
     private:
         sf::Vector2f m_Velocity;
+        HealthComponent m_HealthComp;
     };
 }
 

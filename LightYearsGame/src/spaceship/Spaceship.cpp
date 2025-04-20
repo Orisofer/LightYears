@@ -6,7 +6,10 @@
 
 namespace ly
 {
-    Spaceship::Spaceship(World *owningWorld, const std::string&texturePath) : Actor(owningWorld, texturePath), m_Velocity{}
+    Spaceship::Spaceship(World *owningWorld, const std::string&texturePath) :
+    Actor(owningWorld, texturePath),
+    m_Velocity{},
+    m_HealthComp{100,100}
     {
 
     }
