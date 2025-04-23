@@ -21,11 +21,17 @@ namespace ly
         sf::Vector2f GetVelocity() const;
         virtual void ApplyDamage(float damage) override;
     private:
+        void Blink();
+        void UpdateBlink(float deltaTime);
         virtual void OnHealthChanged(float amt, float health, float maxHealth);
         virtual void OnTakenDamage(float amt, float health, float maxHealth);
         virtual void Blow();
         sf::Vector2f m_Velocity;
         HealthComponent m_HealthComp;
+
+        float m_BlinkTime;
+        float m_BlinkDuration;
+        sf::Color m_BlinkColorOffset;
     };
 }
 

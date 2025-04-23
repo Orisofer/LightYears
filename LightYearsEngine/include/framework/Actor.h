@@ -54,6 +54,8 @@ namespace ly
 
         static uint8 GetNeutralTeamID();
 
+        sf::Sprite& GetSprite();
+
     protected:
         World* m_OwningWorld;
 

@@ -3,13 +3,17 @@
 //
 
 #include "spaceship/Spaceship.h"
+#include "framework/MathUtility.h"
 
 namespace ly
 {
     Spaceship::Spaceship(World *owningWorld, const std::string&texturePath) :
     Actor(owningWorld, texturePath),
     m_Velocity{},
-    m_HealthComp{100,100}
+    m_HealthComp{100,100},
+    m_BlinkTime(0.f),
+    m_BlinkDuration(0.2f),
+    m_BlinkColorOffset{255, 0,0, 255}
     {
 
     }
@@ -29,6 +33,7 @@ namespace ly
     {
         Actor::Tick(deltaTime);
         AddActorLocationOffset(GetVelocity() * deltaTime);
+        UpdateBlink(deltaTime);
     }
 
     void Spaceship::SetVelocity(const sf::Vector2f &velocity)
@@ -50,6 +55,25 @@ namespace ly
         m_HealthComp.ChangeHealth(-damage);
     }
 
+    void Spaceship::Blink()
+    {
+        if (m_BlinkTime == 0)
+        {
+            m_BlinkTime = m_BlinkDuration;
+        }
+    }
+
+    void Spaceship::UpdateBlink(float deltaTime)
+    {
+        if (m_BlinkTime > 0)
+        {
+            m_BlinkTime -= deltaTime;
+            m_BlinkTime = m_BlinkTime > 0 ? m_BlinkTime : 0;
+
+            GetSprite().setColor(LerpColor(sf::Color::White, m_BlinkColorOffset, m_BlinkTime / m_BlinkDuration));
+        }
+    }
+
     void Spaceship::OnHealthChanged(float amt, float health, float maxHealth)
     {
         LOG("spaceship: on health changed: amount: %f, health: %f / %f", amt, health, maxHealth);
@@ -57,7 +81,7 @@ namespace ly
 
     void Spaceship::OnTakenDamage(float amt, float health, float maxHealth)
     {
-        LOG("spaceship: on taken damage: amount: %f, health: %f / %f", amt, health, maxHealth);
+        Blink();
     }
 
     void Spaceship::Blow()

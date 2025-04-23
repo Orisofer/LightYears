@@ -140,6 +140,11 @@ namespace ly
         return s_NeutralTeamID;
     }
 
+    sf::Sprite& Actor::GetSprite()
+    {
+        return m_Sprite;
+    }
+
     bool Actor::IsOtherHostile(Actor *other) const
     {
         if (GetTeamID() == GetNeutralTeamID() || other->GetTeamID() == GetNeutralTeamID())

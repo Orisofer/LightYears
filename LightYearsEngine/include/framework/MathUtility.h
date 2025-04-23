@@ -4,7 +4,8 @@
 
 #ifndef MATHUTILILY_H
 #define MATHUTILILY_H
-#include "SFML/Graphics.hpp"
+
+#include <SFML/Graphics.hpp>
 
 namespace ly
 {
@@ -39,6 +40,12 @@ namespace ly
 
         return toNormalize;
     }
+
+    float LerpFloat(float a, float b, float t);
+
+    sf::Color LerpColor(const sf::Color& a, const sf::Color& b, float t);
+
+    sf::Vector2f LerpVector(const sf::Vector2f& a, const sf::Vector2f& b, float t);
 }
 
 #endif //MATHUTILILY_H
