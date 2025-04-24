@@ -1,8 +1,11 @@
 //
 // Created by Ori Sofer on 15/03/2025.
 //
+#include <__random/random_device.h>
 
 #include "framework/MathUtility.h"
+
+#include <random>
 
 namespace ly
 {
@@ -55,6 +58,31 @@ namespace ly
         float y = LerpFloat(a.y, b.y, t);
 
         return sf::Vector2f(x, y);
+    }
+
+    float RandomRange(float min, float max)
+    {
+        // boilerplate:
+        // this is how to create a random float between two numbers
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        std::uniform_real_distribution<float> distribution(min, max);
+
+        return distribution(gen);
+    }
+
+    sf::Vector2f RandomUnitVector()
+    {
+        float randomX = RandomRange(-1.0f, 1.0f);
+        float randomY = RandomRange(-1.0f, 1.0f);
+
+        sf::Vector2f randomVector = sf::Vector2f(randomX, randomY);
+
+        Normalize(randomVector);
+
+        return randomVector;
     }
 }
 

@@ -46,6 +46,10 @@ namespace ly
     sf::Color LerpColor(const sf::Color& a, const sf::Color& b, float t);
 
     sf::Vector2f LerpVector(const sf::Vector2f& a, const sf::Vector2f& b, float t);
+
+    float RandomRange(float min, float max);
+
+    sf::Vector2f RandomUnitVector();
 }
 
 #endif //MATHUTILILY_H
