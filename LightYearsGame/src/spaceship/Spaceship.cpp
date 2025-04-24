@@ -4,6 +4,7 @@
 
 #include "spaceship/Spaceship.h"
 #include "framework/MathUtility.h"
+#include "VFX/Explosion.h"
 
 namespace ly
 {
@@ -86,7 +87,10 @@ namespace ly
 
     void Spaceship::Blow()
     {
-        LOG("spaceship: on health empty");
+        Explosion* exp = new Explosion(20, .5f, 2.5f, .7f, 3.4f, 40, 670);
+        exp->SpawnExplosion(GetWorld(), GetLocation());
         Destroy();
+        delete exp;
+        exp = nullptr;
     }
 }
