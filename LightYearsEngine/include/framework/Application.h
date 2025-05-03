@@ -25,6 +25,8 @@ namespace ly
         weak<World> LoadWorld();
         ~Application();
         sf::Vector2u GetWindowSize() const;
+    protected:
+        sf::RenderWindow* GetWindow();
     private:
         void TickInternal(float deltaTime);
         void RenderInternal();

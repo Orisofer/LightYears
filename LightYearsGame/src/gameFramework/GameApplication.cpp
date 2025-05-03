@@ -1,12 +1,14 @@
-#include "gameFramework/GameApplication.h"
+
 
 #include <config.h>
 
+#include "gameFramework/GameApplication.h"
 #include "framework/World.h"
 #include "framework/Actor.h"
 #include "framework/MathUtility.h"
 #include "player/PlayerSpaceship.h"
 #include "framework/AssetManager.h"
+#include "enemy/Vanguard.h"
 
 ly::Application* GetApplication(const unsigned int width, const unsigned int height, const std::string title, sf::Uint32 style)
 {
@@ -21,17 +23,13 @@ namespace ly
         AssetManager::Get().SetAssetRootDirectory(GetResourceDirectory());
         weak<World> newWorld = LoadWorld<World>();
         m_PlayerSpaceship = newWorld.lock()->SpawnActor<PlayerSpaceship>();
-        m_PlayerSpaceship.lock()->SetActorLocation(sf::Vector2f(width / 2.f, height / 2.f));
-        m_PlayerSpaceship.lock()->SetActorRotation(ly::DegreesToRadians(90.f));
+        m_PlayerSpaceship.lock()->SetLocation(sf::Vector2f(width / 2.f, height / 2.f));
 
-        weak<Spaceship> testSpaceship = newWorld.lock()->SpawnActor<Spaceship>();
-        testSpaceship.lock()->SetTexture("SpaceShooterRedux/PNG/playerShip1_red.png");
-        testSpaceship.lock()->SetActorLocation(sf::Vector2f(width / 2.f, 0.f));
-        testSpaceship.lock()->SetActorRotation(ly::DegreesToRadians(34.f));
-        testSpaceship.lock()->SetTeamID(2);
+        weak<Vanguard> testEnemySpaceship = newWorld.lock()->SpawnActor<Vanguard>();
+        testEnemySpaceship.lock()->SetLocation(sf::Vector2f(width / 2.f, 100.f));
+        testEnemySpaceship.lock()->SetRotation(180.f);
 
         m_Counter = 0;
-
     }
 
     void GameApplication::Tick(float deltaTime)

@@ -23,16 +23,19 @@ namespace ly
         void SetTexture(const std::string& texturePath);
         void Render(sf::RenderWindow& window);
 
-        void SetActorLocation(const sf::Vector2f& location);
-        void SetActorRotation(float rotation);
+        void SetLocation(const sf::Vector2f& location);
+        void SetRotation(float rotation);
         void AddActorLocationOffset(const sf::Vector2f& offset);
         void AddActorRotationOffset(float rotationOffset);
         float GetRotation();
 
         sf::Vector2f GetLocation() const;
-        sf::Vector2f GetActorForwardDirection();
-        sf::Vector2f GetActorRightDirection();
-        sf::FloatRect GetActorGlobalBounds() const;
+        sf::Vector2f GetForwardDirection();
+        sf::Vector2f GetRightDirection();
+        sf::Vector2f GetLeftDirection();
+        sf::Vector2f GetBackwardDirection();
+        sf::Vector2f GetCustomRelativeDirection(float angle);
+        sf::FloatRect GetGlobalBounds() const;
         sf::Vector2u GetSize() const;
 
         void SetTeamID(uint8 teamID);
@@ -43,7 +46,7 @@ namespace ly
 
         World* GetWorld() const;
 
-        bool IsActorOutOfWindowBounds() const;
+        bool IsActorOutOfWindowBounds(float allowedOffset = 10.f) const;
 
         void SetEnablePhysics(bool enable);
 
@@ -74,8 +77,5 @@ namespace ly
         const static uint8 s_NeutralTeamID = 255;
     };
 
-    inline void Actor::ApplyDamage(float damage)
-    {
-        // no-op
-    }
+
 }

@@ -37,7 +37,6 @@ namespace ly
     {
         m_CooldownClock.restart();
         weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), "SpaceShooterRedux/PNG/Lasers/laserBlue01.png");
-        newBullet.lock()->SetActorLocation(GetOwner()->GetLocation());
-        newBullet.lock()->SetActorRotation(ly::DegreesToRadians(0.f));
+        newBullet.lock()->SetLocation(GetOwner()->GetLocation());
     }
 }

@@ -51,18 +51,22 @@ namespace ly
 
     }
 
-    void Actor::SetTexture(const std::string &texturePath)
+    void Actor::SetTexture(const std::string& texturePath)
     {
+        if (texturePath == "none")
+        {
+            return;
+        }
+
         m_Texture = AssetManager::Get().LoadTexture(texturePath);
 
-        if (!m_Texture) return;
+        if (!m_Texture)
+        {
+            return;
+        }
 
         m_Sprite.setTexture(*m_Texture);
-
-        const int texWidth = m_Texture->getSize().x;
-        const int texHeight = m_Texture->getSize().y;
-
-        m_Sprite.setTextureRect(sf::IntRect{sf::Vector2i{0,0}, sf::Vector2i{texWidth, texHeight}});
+        m_Sprite.setTextureRect(sf::IntRect{sf::Vector2i{}, sf::Vector2i{m_Texture->getSize()}});
 
         CenterPivot();
     }
@@ -74,26 +78,32 @@ namespace ly
         window.draw(m_Sprite);
     }
 
-    void Actor::SetActorLocation(const sf::Vector2f &location)
+    void Actor::SetLocation(const sf::Vector2f &location)
     {
         m_Sprite.setPosition(location);
         UpdatePhysicsBodyTransform();
     }
 
-    void Actor::SetActorRotation(float rotation)
+    void Actor::SetRotation(float rotation)
     {
         m_Sprite.setRotation(rotation);
         UpdatePhysicsBodyTransform();
     }
 
+    float Actor::GetRotation()
+    {
+        float rotation = m_Sprite.getRotation();
+        return rotation;
+    }
+
     void Actor::AddActorLocationOffset(const sf::Vector2f &offset)
     {
-        SetActorLocation(GetLocation() + offset);
+        SetLocation(GetLocation() + offset);
     }
 
     void Actor::AddActorRotationOffset(float rotationOffset)
     {
-        SetActorRotation(GetRotation() + rotationOffset);
+        SetRotation(GetRotation() + rotationOffset);
     }
 
     sf::Vector2f Actor::GetLocation() const
@@ -101,26 +111,35 @@ namespace ly
         return m_Sprite.getPosition();
     }
 
-    float Actor::GetRotation()
+    sf::Vector2f Actor::GetForwardDirection()
     {
-        return m_Sprite.getRotation();
-    }
-
-    // the +90.f and -90.f corrections are compensation
-    // because for some reason when loading textures everything is flipped 90
-    // degrees to the right
-    sf::Vector2f Actor::GetActorForwardDirection()
-    {
-        return ly::RotationToVector(GetRotation() + 270.f);
+        float rotation = GetRotation();
+        sf::Vector2f forward = ly::RotationToVector(rotation + 0.f);
+        return forward;
     }
 
     // also here
-    sf::Vector2f Actor::GetActorRightDirection()
+    sf::Vector2f Actor::GetRightDirection()
     {
         return ly::RotationToVector(GetRotation() + 90.f);
     }
 
-    sf::FloatRect Actor::GetActorGlobalBounds() const
+    sf::Vector2f Actor::GetLeftDirection()
+    {
+        return ly::RotationToVector(GetRotation() - 90.f);
+    }
+
+    sf::Vector2f Actor::GetBackwardDirection()
+    {
+        return ly::RotationToVector(GetRotation() + 180.f);
+    }
+
+    sf::Vector2f Actor::GetCustomRelativeDirection(float angle)
+    {
+        return ly::RotationToVector(GetRotation() + angle);
+    }
+
+    sf::FloatRect Actor::GetGlobalBounds() const
     {
         return m_Sprite.getGlobalBounds();
     }
@@ -142,11 +161,14 @@ namespace ly
 
     sf::Sprite& Actor::GetSprite()
     {
-        return m_Sprite;
+        sf::Sprite& spriteRef = m_Sprite;
+        return spriteRef;
     }
 
     bool Actor::IsOtherHostile(Actor *other) const
     {
+        if (other == nullptr) return false;
+
         if (GetTeamID() == GetNeutralTeamID() || other->GetTeamID() == GetNeutralTeamID())
         {
             return false;
@@ -165,33 +187,33 @@ namespace ly
         return m_OwningWorld;
     }
 
-    bool Actor::IsActorOutOfWindowBounds() const
+    bool Actor::IsActorOutOfWindowBounds(float allowedOffset) const
     {
         float windowWidth = GetWorld()->GetWindowSize().x;
         float windowHeight = GetWorld()->GetWindowSize().y;
 
-        float actorWidth = GetActorGlobalBounds().width;
-        float actorHeight = GetActorGlobalBounds().height;
+        float actorWidth = GetGlobalBounds().width;
+        float actorHeight = GetGlobalBounds().height;
 
         float actorPositionX = GetLocation().x;
         float actorPositionY = GetLocation().y;
 
-        if (actorPositionX + (actorWidth * 0.5f) > windowWidth)
+        if ((actorPositionX + (actorWidth * 0.5f)) - allowedOffset > windowWidth)
         {
             return true;
         }
 
-        if (actorPositionX + (actorWidth * 0.5f) < 0)
+        if ((actorPositionX - (actorWidth * 0.5f)) + allowedOffset < 0)
         {
             return true;
         }
 
-        if (actorPositionY + (actorHeight * 0.5f) > windowHeight)
+        if ((actorPositionY + (actorHeight * 0.5f)) - allowedOffset > windowHeight)
         {
             return true;
         }
 
-        if (actorPositionY +  (actorHeight * 0.5f) < 0)
+        if (actorPositionY - (actorHeight * 0.5f) + allowedOffset < 0)
         {
             return true;
         }
@@ -202,7 +224,7 @@ namespace ly
     void Actor::CenterPivot()
     {
         sf::FloatRect bounds = m_Sprite.getGlobalBounds();
-        m_Sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+        m_Sprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
     }
 
     void Actor::UpdatePhysicsBodyTransform()
@@ -211,9 +233,11 @@ namespace ly
         {
             float physicsScale = PhysicsSystem::Get().GetPhysicsScale();
             b2Vec2 pos{GetLocation().x * physicsScale, GetLocation().y * physicsScale};
-            float rotation = DegreesToRadians(GetRotation());
 
-            m_PhysicsBody->SetTransform(pos, rotation);
+            float rotDegrees = GetRotation();
+            float rotRadians = DegreesToRadians(rotDegrees);
+
+            m_PhysicsBody->SetTransform(pos, rotRadians);
         }
     }
 
@@ -250,10 +274,17 @@ namespace ly
 
     void Actor::OnActorBeginOverlap(Actor *actor)
     {
+        // no-op
     }
 
     void Actor::OnActorEndOverlap(Actor *other)
     {
+        // no-op
+    }
+
+    void Actor::ApplyDamage(float damage)
+    {
+        // no-op
     }
 
     void Actor::Destroy()

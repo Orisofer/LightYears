@@ -6,13 +6,14 @@
 
 namespace ly
 {
-    Bullet::Bullet(World *world, Actor *owner, const std::string &texturePath, float speed, float damage)
+    Bullet::Bullet(World *world, Actor *owner, const std::string &texturePath, float speed, float damage, float moveAngle)
         : Actor(world, texturePath),
         m_Owner(owner),
         m_Speed(speed),
         m_Damage(damage)
     {
         SetTeamID(owner->GetTeamID());
+        SetRotation(owner->GetRotation());
     }
 
     void Bullet::BeginPlay()
@@ -50,7 +51,7 @@ namespace ly
 
     void Bullet::Move(float deltaTime)
     {
-        AddActorLocationOffset(GetActorForwardDirection() * m_Speed * deltaTime);
+        AddActorLocationOffset(m_Owner->GetLeftDirection() * m_Speed * deltaTime);
     }
 
     void Bullet::OnActorBeginOverlap(Actor *other)

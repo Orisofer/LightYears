@@ -22,6 +22,7 @@ namespace ly
         void ShootImpl() override;
         sf::Clock m_CooldownClock;
         float m_CooldownTime;
+        float m_BulletsAngle;
     };
 }
 

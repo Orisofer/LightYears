@@ -19,12 +19,12 @@ namespace ly
 
     float DegreesToRadians(float degrees)
     {
-        return degrees * (PI / 180.0f);
+        return degrees * PI / 180.0f;
     }
 
     float RadiansToDegrees(float radians)
     {
-        return radians * (180.0f / PI);
+        return radians * 180.0f / PI;
     }
 
     float LerpFloat(float a, float b, float t)

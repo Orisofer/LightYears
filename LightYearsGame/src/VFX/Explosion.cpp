@@ -38,7 +38,7 @@ namespace ly
             weak<Particle> newParticle = world->SpawnActor<Particle>(path);
 
             newParticle.lock()->RandomLifetime(m_LifeTimeMin, m_LifeTimeMax);
-            newParticle.lock()->SetActorLocation(location);
+            newParticle.lock()->SetLocation(location);
             newParticle.lock()->RandomVelocity(m_SpeedMin, m_SpeedMax);
             newParticle.lock()->RandomSize(m_SizeMin, m_SizeMax);
             newParticle.lock()->GetSprite().setColor(m_ParticleColor);

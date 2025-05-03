@@ -57,8 +57,8 @@ namespace ly
 
         b2PolygonShape shape;
 
-        float listenerBoundsWidth = listener->GetActorGlobalBounds().width;
-        float listenerBoundsHeight = listener->GetActorGlobalBounds().height;
+        float listenerBoundsWidth = listener->GetGlobalBounds().width;
+        float listenerBoundsHeight = listener->GetGlobalBounds().height;
 
         shape.SetAsBox(listenerBoundsWidth * .5f * GetPhysicsScale(), listenerBoundsHeight * .5f * GetPhysicsScale());
 

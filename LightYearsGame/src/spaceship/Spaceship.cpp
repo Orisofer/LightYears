@@ -87,10 +87,16 @@ namespace ly
 
     void Spaceship::Blow()
     {
-        Explosion* exp = new Explosion(20, .5f, 2.5f, .7f, 3.4f, 40, 670);
-        exp->SpawnExplosion(GetWorld(), GetLocation());
+        // Explosion* exp = new Explosion(20, .5f, 2.5f, .7f, 3.4f, 40, 670);
+        // exp->SpawnExplosion(GetWorld(), GetLocation());
+        // Destroy();
+        // delete exp;
+        // exp = nullptr;
+
+        // my interpretation: allocating explosion on the stack because it is rather small object.
+        // heap version is commented above
+        Explosion expStack{20, .5f, 2.5f, .7f, 3.4f, 40, 670};
+        expStack.SpawnExplosion(GetWorld(), GetLocation());
         Destroy();
-        delete exp;
-        exp = nullptr;
     }
 }

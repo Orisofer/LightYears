@@ -112,4 +112,9 @@ namespace ly
     {
         return m_Window.getSize();
     }
+
+    sf::RenderWindow * Application::GetWindow()
+    {
+        return &m_Window;
+    }
 }
