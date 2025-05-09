@@ -21,8 +21,10 @@ namespace ly
     public:
         Application(unsigned int width, unsigned int height, const std::string title, sf::Uint32 style);
         void Run();
+
         template<typename T>
-        weak<World> LoadWorld();
+        weak<T> LoadWorld();
+
         ~Application();
         sf::Vector2u GetWindowSize() const;
     protected:
@@ -41,7 +43,7 @@ namespace ly
     };
 
     template<typename T>
-    weak<World> Application::LoadWorld()
+    weak<T> Application::LoadWorld()
     {
         shared<T> newWorldPtr{ new T{ this } };
         m_CurrentWorld = newWorldPtr;
