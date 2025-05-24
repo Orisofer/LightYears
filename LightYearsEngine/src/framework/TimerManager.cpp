@@ -57,6 +57,7 @@ namespace ly
 
 
     unique<TimerManager> TimerManager::s_Instance{nullptr};
+    unsigned int TimerManager::m_TimerIndexCounter {0};
 
     TimerManager::TimerManager() :
     m_Timers()
@@ -75,9 +76,27 @@ namespace ly
 
     void TimerManager::UpdateTimers(float deltaTime)
     {
-        for (Timer& timer : m_Timers)
+        for (auto iter = m_Timers.begin(); iter != m_Timers.end();)
         {
-            timer.TickTime(deltaTime);
+            if (iter->second.Expired())
+            {
+                iter = m_Timers.erase(iter);
+            }
+            else
+            {
+                iter->second.TickTime(deltaTime);
+                ++iter;
+            }
+        }
+    }
+
+    void TimerManager::ClearTimer(unsigned int timerIndex)
+    {
+        auto iter = m_Timers.find(timerIndex);
+
+        if (iter != m_Timers.end())
+        {
+            iter->second.SetExpired();
         }
     }
 }

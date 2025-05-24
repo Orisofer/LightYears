@@ -25,11 +25,12 @@ namespace ly
 
     void GameLevelOne::BeginPlay()
     {
-        TimerManager::Get().SetTimer(GetWeakRef(), &GameLevelOne::TimerCallback_Test, 3.f, true);
+        m_TimerIndex_Test = TimerManager::Get().SetTimer(GetWeakRef(), &GameLevelOne::TimerCallback_Test, 3.f, true);
     }
 
     void GameLevelOne::TimerCallback_Test()
     {
-        
+        LOG("CALLBACKKKKKKKKKKKKKKKKKK");
+        TimerManager::Get().ClearTimer(m_TimerIndex_Test);
     }
 }
