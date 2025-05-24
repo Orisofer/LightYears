@@ -10,6 +10,7 @@
 #include "framework/World.h"
 #include "framework/AssetManager.h"
 #include "framework/PhysicsSystem.h"
+#include "framework/TimerManager.h"
 
 namespace ly
 {
@@ -66,6 +67,9 @@ namespace ly
             m_CurrentWorld->BeginPlayInternal();
             m_CurrentWorld->TickInternal(deltaTime);
         }
+
+        // ticking the world timers inside the timer manager
+        TimerManager::Get().UpdateTimers(deltaTime);
 
         // ticking the physics logic (kind of like fixed update in unity)
         PhysicsSystem::Get().Step(deltaTime);

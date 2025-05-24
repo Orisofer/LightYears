@@ -1,6 +1,7 @@
 #ifndef World_hpp
 #define World_hpp
 
+#include "Object.h"
 #include "framework/Core.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 
@@ -9,7 +10,7 @@ namespace ly
     class Application;
     class Actor;
 
-    class World
+    class World : public Object
     {
     public:
         World(Application* owningApp);
