@@ -7,7 +7,32 @@
 namespace ly
 {
 
+    // ---------------------------------- TIMER HANDLER PART --------------------------------------
+
+    unsigned int TimerHandler::m_TimerKeyCounter = 0;
+
+    unsigned int TimerHandler::GetNextTimerKey()
+    {
+        return ++m_TimerKeyCounter;
+    }
+
+    TimerHandler::TimerHandler() :
+    m_TimerKey(GetNextTimerKey())
+    {
+    }
+
+    unsigned int TimerHandler::GetTimerKey() const
+    {
+        return m_TimerKey;
+    }
+
+    bool operator==(const TimerHandler& lhs, const TimerHandler& rhs)
+    {
+        return lhs.GetTimerKey() == rhs.GetTimerKey();
+    }
+
     // --------------------------------- TIMER STRUCTURE PART -------------------------------------
+
 
     Timer::Timer(weak<Object> weakRef, std::function<void()> callback, float duration, bool repeat) :
     m_Listener(weakRef, callback),
@@ -57,7 +82,6 @@ namespace ly
 
 
     unique<TimerManager> TimerManager::s_Instance{nullptr};
-    unsigned int TimerManager::m_TimerIndexCounter {0};
 
     TimerManager::TimerManager() :
     m_Timers()
@@ -90,9 +114,9 @@ namespace ly
         }
     }
 
-    void TimerManager::ClearTimer(unsigned int timerIndex)
+    void TimerManager::ClearTimer(TimerHandler timerHandler)
     {
-        auto iter = m_Timers.find(timerIndex);
+        auto iter = m_Timers.find(timerHandler);
 
         if (iter != m_Timers.end())
         {

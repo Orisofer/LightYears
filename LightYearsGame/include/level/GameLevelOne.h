@@ -5,6 +5,7 @@
 #ifndef GAMELEVELONE_H
 #define GAMELEVELONE_H
 
+#include "framework/TimerManager.h"
 #include "framework/World.h"
 
 namespace ly
@@ -19,7 +20,7 @@ namespace ly
         virtual void BeginPlay() override;
         void TimerCallback_Test();
         weak<PlayerSpaceship> m_PlayerSpaceship;
-        unsigned int m_TimerIndex_Test;
+        TimerHandler m_TimerHandler_Test;
     };
 
 }
