@@ -23,6 +23,7 @@ namespace ly
         static unsigned int GetNextTimerKey();
     };
 
+    // functor - object that is a function (operator () overloaded)
     struct TimerHandlerHashFunction
     {
     public:
