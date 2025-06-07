@@ -3,10 +3,20 @@
 #include "framework/Core.h"
 #include "framework/Actor.h"
 #include "framework/Application.h"
+#include "gameplay/GameStage.h"
 
 namespace ly
 {
-    World::World(Application* owningApp) : m_OwningApp{owningApp}, m_Playing{false}, m_Actors{}, m_PendingActors{} {}
+    World::World(Application* owningApp) :
+    m_OwningApp{owningApp},
+    m_Playing{false},
+    m_Actors(),
+    m_PendingActors(),
+    m_GameStages(),
+    m_CurrentStageIndex(-1)
+    {
+
+    }
 
     void World::BeginPlayInternal()
     {
@@ -15,6 +25,8 @@ namespace ly
             m_Playing = true;
 
             BeginPlay();
+            InitGameStages();
+            NextGameStage();
         }
     }
 
@@ -33,6 +45,11 @@ namespace ly
         {
             iter->get()->TickInternal(deltaTime);
             ++iter;
+        }
+
+        if (m_CurrentStageIndex >= 0 && m_CurrentStageIndex < m_GameStages.size())
+        {
+            m_GameStages[m_CurrentStageIndex]->TickStage(deltaTime);
         }
 
         Tick(deltaTime);
@@ -60,6 +77,26 @@ namespace ly
                 ++iter;
             }
         }
+
+        for (auto iter = m_GameStages.begin(); iter != m_GameStages.end();)
+        {
+            if (iter->get()->IsStageFinished())
+            {
+                m_GameStages.erase(iter);
+            }
+            else
+            {
+                ++iter;
+            }
+        }
+    }
+
+    void World::AddStage(const shared<GameStage> stage)
+    {
+        if (stage != nullptr)
+        {
+            m_GameStages.push_back(stage);
+        }
     }
 
     void World::BeginPlay()
@@ -70,6 +107,31 @@ namespace ly
     void World::Tick(float deltaTime)
     {
         //LOG("Ticking at framerate %f", 1.0f / deltaTime);
+    }
+
+    void World::InitGameStages()
+    {
+        // no-op
+    }
+
+    void World::AllGameStagesFinished()
+    {
+
+    }
+
+    void World::NextGameStage()
+    {
+        m_CurrentStageIndex++;
+
+        if (m_CurrentStageIndex >= 0 && m_CurrentStageIndex < m_GameStages.size())
+        {
+            m_GameStages[m_CurrentStageIndex]->OnStageFinished.BindAction(GetWeakRef(), &World::NextGameStage);
+            m_GameStages[m_CurrentStageIndex]->StartStage();
+        }
+        else
+        {
+            AllGameStagesFinished();
+        }
     }
 
     World::~World()

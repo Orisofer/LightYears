@@ -9,6 +9,7 @@
 #include "player/PlayerSpaceship.h"
 #include "enemy/Vanguard.h"
 #include "framework/TimerManager.h"
+#include "gameplay/GameStage.h"
 
 namespace ly
 {
@@ -28,9 +29,14 @@ namespace ly
         m_TimerHandler_Test = TimerManager::Get().SetTimer(GetWeakRef(), &GameLevelOne::TimerCallback_Test, 3.f, true);
     }
 
+    void GameLevelOne::InitGameStages()
+    {
+        AddStage(shared<GameStage>(new GameStage(this)));
+    }
+
     void GameLevelOne::TimerCallback_Test()
     {
-        LOG("CALLBACKKKKKKKKKKKKKKKKKK");
+        LOG("TIMER CLLBACK TEST");
         TimerManager::Get().ClearTimer(m_TimerHandler_Test);
     }
 }

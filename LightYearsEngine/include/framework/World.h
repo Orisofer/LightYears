@@ -9,6 +9,7 @@ namespace ly
 {
     class Application;
     class Actor;
+    class GameStage;
 
     class World : public Object
     {
@@ -18,6 +19,7 @@ namespace ly
         void TickInternal(float deltaTime);
         void Render(sf::RenderWindow& window);
         void CleanCycle();
+        void AddStage(const shared<GameStage> stage);
 
         template<typename T, typename... Args>
         weak<T> SpawnActor(Args... args);
@@ -27,9 +29,14 @@ namespace ly
     private:
         virtual void BeginPlay();
         virtual void Tick(float deltaTime);
+        virtual void InitGameStages();
+        virtual void AllGameStagesFinished();
+        void NextGameStage();
         List<shared<Actor>> m_Actors;
         List<shared<Actor>> m_PendingActors;
+        List<shared<GameStage>> m_GameStages;
         Application* m_OwningApp;
+        int m_CurrentStageIndex;
         bool m_Playing;
     };
 
