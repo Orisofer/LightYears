@@ -28,7 +28,7 @@ namespace ly
         Actor::Tick(deltaTime);
         Move(deltaTime);
 
-        if (IsActorOutOfWindowBounds())
+        if (IsActorOutOfWindowBounds(100))
         {
             Destroy();
         }

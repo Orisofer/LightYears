@@ -12,7 +12,7 @@ namespace ly
 {
     class World;
 
-    class GameStage : public ly::Object
+    class GameStage : public Object
     {
     public:
         GameStage(World* world);

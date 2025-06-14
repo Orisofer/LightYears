@@ -17,7 +17,6 @@ namespace ly
         BulletShooter(Actor* owner, float coolDownTime = 0.1f);
         bool IsOnCooldown() const override;
         bool CanShoot() const override;
-        ~BulletShooter() = default;
     private:
         void ShootImpl() override;
         sf::Clock m_CooldownClock;
