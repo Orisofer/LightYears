@@ -35,9 +35,9 @@ namespace ly
 
     void GameStage::FinishStage()
     {
-        OnStageFinished.Broadcast();
         m_StageFinished = true;
         StageFinished();
+        OnStageFinished.Broadcast();
     }
 
     bool GameStage::IsStageFinished() const

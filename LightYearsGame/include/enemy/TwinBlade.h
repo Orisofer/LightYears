@@ -5,11 +5,10 @@
 #ifndef TWINBLADE_H
 #define TWINBLADE_H
 #include "enemy/EnemySpaceship.h"
+#include "weapon/BulletShooter.h"
 
 namespace ly
 {
-    class BulletShooter;
-
     class TwinBlade : public EnemySpaceship
     {
     public:
