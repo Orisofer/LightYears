@@ -51,7 +51,7 @@ namespace ly
 
     void Bullet::Move(float deltaTime)
     {
-        AddActorLocationOffset(m_Owner->GetLeftDirection() * m_Speed * deltaTime);
+        AddActorLocationOffset(m_Owner->GetForwardDirection() * m_Speed * deltaTime);
     }
 
     void Bullet::OnActorBeginOverlap(Actor *other)

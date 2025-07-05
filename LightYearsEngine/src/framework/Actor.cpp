@@ -114,24 +114,29 @@ namespace ly
     sf::Vector2f Actor::GetForwardDirection()
     {
         float rotation = GetRotation();
-        sf::Vector2f forward = ly::RotationToVector(rotation + 0.f);
+        sf::Vector2f forward = ly::RotationToVector(rotation - 90.f);
         return forward;
     }
 
-    // also here
     sf::Vector2f Actor::GetRightDirection()
     {
-        return ly::RotationToVector(GetRotation() + 90.f);
+        float rotation = GetRotation();
+        sf::Vector2f right = ly::RotationToVector(rotation);
+        return right;
     }
 
     sf::Vector2f Actor::GetLeftDirection()
     {
-        return ly::RotationToVector(GetRotation() - 90.f);
+        float rotation = GetRotation();
+        sf::Vector2f left = ly::RotationToVector(rotation + 180.f);
+        return left;
     }
 
     sf::Vector2f Actor::GetBackwardDirection()
     {
-        return ly::RotationToVector(GetRotation() + 180.f);
+        float rotation = GetRotation();
+        sf::Vector2f back = ly::RotationToVector(rotation + 90.f);
+        return back;
     }
 
     sf::Vector2f Actor::GetCustomRelativeDirection(float angle)

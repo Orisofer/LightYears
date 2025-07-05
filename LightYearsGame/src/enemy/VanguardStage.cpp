@@ -52,7 +52,6 @@ namespace ly
 
         weak<Vanguard> vanguard = GetWorld()->SpawnActor<Vanguard>();
         vanguard.lock()->SetLocation(m_SpawnLocation);
-        vanguard.lock()->SetRotation(180.f);
         m_CurrentRowVanguardCount++;
     }
 

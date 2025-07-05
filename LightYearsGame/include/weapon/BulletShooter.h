@@ -14,12 +14,16 @@ namespace ly
     class BulletShooter : public Shooter
     {
     public:
-        BulletShooter(Actor* owner, float coolDownTime = 0.1f);
+        BulletShooter(Actor* owner, float coolDownTime = 0.1f, const sf::Vector2f& localPositionOffset = sf::Vector2f(0,0),
+            float localRotationOffset = 0, const std::string& texturePath = "SpaceShooterRedux/PNG/Lasers/laserBlue01.png");
         bool IsOnCooldown() const override;
         bool CanShoot() const override;
     private:
         void ShootImpl() override;
         sf::Clock m_CooldownClock;
+        sf::Vector2f m_LocalPositionOffset;
+        std::string m_TexturePath;
+        float m_LocalRotationOffset;
         float m_CooldownTime;
         float m_BulletsAngle;
     };

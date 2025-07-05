@@ -18,11 +18,9 @@ namespace ly
     World(owningApp)
     {
         m_PlayerSpaceship = SpawnActor<PlayerSpaceship>();
-        m_PlayerSpaceship.lock()->SetLocation(sf::Vector2f(owningApp->GetWindowSize().x / 2.f, owningApp->GetWindowSize().y / 2.f));
 
-        // weak<Vanguard> testEnemySpaceship = SpawnActor<Vanguard>();
-        // testEnemySpaceship.lock()->SetLocation(sf::Vector2f(owningApp->GetWindowSize().x / 2.f, 100.f));
-        // testEnemySpaceship.lock()->SetRotation(180.f);
+        sf::Vector2u windowSize = owningApp->GetWindowSize();
+        m_PlayerSpaceship.lock()->SetLocation(sf::Vector2f(owningApp->GetWindowSize().x / 2.f, owningApp->GetWindowSize().y / 2.f));
     }
 
     void GameLevelOne::BeginPlay()
