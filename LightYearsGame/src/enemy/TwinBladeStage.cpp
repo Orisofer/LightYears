@@ -13,7 +13,8 @@ namespace ly
         : GameStage(owningWorld),
     m_SpawningInterval(1.5f),
     m_SpawnDistanceToCenter(100.0f),
-    m_SpawnAmount(10),
+    m_SpawnLocation(m_LeftSpawnLocation),
+    m_SpawnAmount(2),
     m_CurrentSpawnCount(0)
     {
 
@@ -33,6 +34,8 @@ namespace ly
 
     void TwinBladeStage::StageFinished()
     {
+        GameStage::StageFinished();
+
         TimerManager::Get().ClearTimer(m_SpawnTimerHandler);
     }
 

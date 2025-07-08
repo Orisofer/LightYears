@@ -16,7 +16,7 @@ namespace ly
     m_LeftSpawnLocation(0.f, 0.f),
     m_RightSpawnLocation(0.f, 0.f),
     m_SpawnLocation(0.f, 0.f),
-    m_RowsToSpawn(4),
+    m_RowsToSpawn(2),
     m_CurrentRowVanguardCount(0),
     m_VanguardsPerRow(5),
     m_RowsSpawnCount(0)
@@ -36,6 +36,8 @@ namespace ly
 
     void VanguardStage::StageFinished()
     {
+        GameStage::StageFinished();
+
         TimerManager::Get().ClearTimer(m_SwitchTimerHandler);
         TimerManager::Get().ClearTimer(m_SpawnTimerHandler);
     }

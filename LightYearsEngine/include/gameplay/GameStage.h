@@ -26,8 +26,9 @@ namespace ly
         virtual void FinishStage();
 
         bool IsStageFinished() const;
-    private:
+    protected:
         virtual void StageFinished();
+    private:
         World* m_World;
         bool m_StageFinished;
     };

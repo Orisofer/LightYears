@@ -32,11 +32,12 @@ namespace ly
         virtual void InitGameStages();
         virtual void AllGameStagesFinished();
         void NextGameStage();
+        void StartStages();
         List<shared<Actor>> m_Actors;
         List<shared<Actor>> m_PendingActors;
         List<shared<GameStage>> m_GameStages;
+        List<shared<GameStage>>::iterator m_CurrentGameStage;
         Application* m_OwningApp;
-        int m_CurrentStageIndex;
         bool m_Playing;
     };
 

@@ -45,6 +45,12 @@ namespace ly
             }
 
             float frameDeltaTime = m_TickClock.restart().asSeconds();
+
+            if (frameDeltaTime > 0.5f)
+            {
+                frameDeltaTime = 0.f;
+            }
+
             accumulatedTime += frameDeltaTime;
 
             while (accumulatedTime > targetDeltaTime)
