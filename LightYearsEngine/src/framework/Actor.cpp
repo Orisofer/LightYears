@@ -274,6 +274,8 @@ namespace ly
     {
         if (m_PhysicsBody)
         {
+            m_PhysicsBody->GetUserData().pointer = 0;
+
             PhysicsSystem::Get().RemoveListener(m_PhysicsBody);
             m_PhysicsBody = nullptr;
         }

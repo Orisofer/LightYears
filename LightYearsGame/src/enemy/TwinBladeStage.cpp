@@ -4,6 +4,7 @@
 
 #include "enemy/TwinBladeStage.h"
 
+#include "enemy/Hexagon.h"
 #include "enemy/TwinBlade.h"
 #include "framework/World.h"
 
@@ -43,7 +44,7 @@ namespace ly
     {
         if (m_CurrentSpawnCount < m_SpawnAmount)
         {
-            weak<TwinBlade> twinBlade = GetWorld()->SpawnActor<TwinBlade>();
+            weak<Hexagon> twinBlade = GetWorld()->SpawnActor<Hexagon>();
             twinBlade.lock()->SetLocation(m_SpawnLocation);
             m_CurrentSpawnCount++;
 
