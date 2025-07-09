@@ -241,8 +241,10 @@ namespace ly
 
             float rotDegrees = GetRotation();
             float rotRadians = DegreesToRadians(rotDegrees);
+            b2Vec2 newVel{cos(rotRadians), sin(rotRadians)};
 
             m_PhysicsBody->SetTransform(pos, rotRadians);
+            m_PhysicsBody->SetLinearVelocity(newVel);
         }
     }
 

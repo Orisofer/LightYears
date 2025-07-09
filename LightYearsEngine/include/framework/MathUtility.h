@@ -50,6 +50,8 @@ namespace ly
     float RandomRange(float min, float max);
 
     sf::Vector2f RandomUnitVector();
+
+    sf::Vector2f RotateVector(const sf::Vector2f& vector, float angle);
 }
 
 #endif //MATHUTILILY_H

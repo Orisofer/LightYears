@@ -33,6 +33,9 @@ add_executable(${LIGHT_YEARS_GAME_TARGET_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/include/enemy/TwinBlade.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/enemy/TwinBlade.cpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/enemy/Hexagon.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/enemy/Hexagon.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/include/enemy/VanguardStage.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/enemy/VanguardStage.cpp
 

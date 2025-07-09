@@ -4,13 +4,16 @@
 
 #include "weapon/Bullet.h"
 
+#include "framework/MathUtility.h"
+
 namespace ly
 {
     Bullet::Bullet(World *world, Actor *owner, const std::string &texturePath, float speed, float damage, float moveAngle)
         : Actor(world, texturePath),
         m_Owner(owner),
         m_Speed(speed),
-        m_Damage(damage)
+        m_Damage(damage),
+        m_MoveAngle(moveAngle)
     {
         SetTeamID(owner->GetTeamID());
         SetRotation(owner->GetRotation());
@@ -44,6 +47,11 @@ namespace ly
         m_Damage = damage;
     }
 
+    void Bullet::SetMoveAngle(float moveAngle)
+    {
+        m_MoveAngle = moveAngle;
+    }
+
     float Bullet::GetDamage() const
     {
         return m_Damage;
@@ -51,7 +59,11 @@ namespace ly
 
     void Bullet::Move(float deltaTime)
     {
-        AddActorLocationOffset(m_Owner->GetForwardDirection() * m_Speed * deltaTime);
+        sf::Vector2f forwardDir = m_Owner->GetForwardDirection();
+
+        sf::Vector2f rotated = ly::RotateVector(forwardDir, m_MoveAngle);
+        sf::Vector2f rotatedNormalized = ly::Normalize(rotated);
+        AddActorLocationOffset(rotatedNormalized * m_Speed * deltaTime);
     }
 
     void Bullet::OnActorBeginOverlap(Actor *other)

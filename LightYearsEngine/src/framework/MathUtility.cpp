@@ -84,6 +84,15 @@ namespace ly
 
         return randomVector;
     }
+
+    sf::Vector2f RotateVector(const sf::Vector2f& vector, float angle)
+    {
+        float radians = DegreesToRadians(angle);
+        float cosAngle = std::cos(radians);
+        float sinAngle = std::sin(radians);
+        sf::Vector2f rotatedVector = sf::Vector2f(vector.x * cosAngle - vector.y * sinAngle, vector.x * sinAngle + vector.y * cosAngle);
+        return rotatedVector;
+    }
 }
 
 

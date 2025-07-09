@@ -18,8 +18,10 @@ namespace ly
 
         void SetSpeed(float speed);
         void SetDamage(float damage);
+        void SetMoveAngle(float moveAngle);
 
         float GetDamage() const;
+
     private:
         void Move(float deltaTime);
 
@@ -29,6 +31,7 @@ namespace ly
         Actor* m_Owner;
         float m_Speed;
         float m_Damage;
+        float m_MoveAngle;
     };
 }
 

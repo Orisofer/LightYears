@@ -49,7 +49,9 @@ namespace ly
 
         m_CooldownClock.restart();
         weak<Bullet> newBullet = GetOwner()->GetWorld()->SpawnActor<Bullet>(GetOwner(), m_TexturePath);
+
         newBullet.lock()->SetLocation(GetOwner()->GetLocation() + finalPosOffset);
         newBullet.lock()->SetRotation(GetOwner()->GetRotation() + m_LocalRotationOffset);
+        newBullet.lock()->SetMoveAngle(m_LocalRotationOffset);
     }
 }
