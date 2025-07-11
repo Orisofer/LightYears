@@ -9,17 +9,17 @@ namespace ly
 {
     Hexagon::Hexagon(World* owningWorld, const std::string& texturePath,const sf::Vector2f& velocity) :
     EnemySpaceship(owningWorld, texturePath),
-    m_BulletShooter01{new BulletShooter(this, 2.10f, sf::Vector2f{00.f, -50.f}, 180.f,
+    m_BulletShooter01{new BulletShooter(this, 2.0f, sf::Vector2f{00.f, -50.f}, 180.f,
         "SpaceShooterRedux/PNG/Lasers/laserRed08.png"),},
-    m_BulletShooter02{new BulletShooter(this, 2.05f, sf::Vector2f{40.f, -25.f}, 120.f,
+    m_BulletShooter02{new BulletShooter(this, 2.0f, sf::Vector2f{40.f, -25.f}, 120.f,
         "SpaceShooterRedux/PNG/Lasers/laserRed08.png")},
-    m_BulletShooter03{new BulletShooter(this, 2.15f, sf::Vector2f{-40.f, -25.f}, -120.f,
+    m_BulletShooter03{new BulletShooter(this, 2.0f, sf::Vector2f{-40.f, -25.f}, -120.f,
         "SpaceShooterRedux/PNG/Lasers/laserRed08.png")},
-    m_BulletShooter04{new BulletShooter(this, 2.25f, sf::Vector2f{00.f, 50.f}, 00.f,
+    m_BulletShooter04{new BulletShooter(this, 2.0f, sf::Vector2f{00.f, 50.f}, 00.f,
         "SpaceShooterRedux/PNG/Lasers/laserRed08.png")},
-    m_BulletShooter05{new BulletShooter(this, 2.30f, sf::Vector2f{40.f, 25.f}, 60.f,
+    m_BulletShooter05{new BulletShooter(this, 2.0f, sf::Vector2f{40.f, 25.f}, 60.f,
         "SpaceShooterRedux/PNG/Lasers/laserRed08.png")},
-    m_BulletShooter06{new BulletShooter(this, 2.20f, sf::Vector2f{-40.f, 25.f}, -60.f,
+    m_BulletShooter06{new BulletShooter(this, 2.0f, sf::Vector2f{-40.f, 25.f}, -60.f,
         "SpaceShooterRedux/PNG/Lasers/laserRed08.png")}
     {
         SetVelocity(velocity);

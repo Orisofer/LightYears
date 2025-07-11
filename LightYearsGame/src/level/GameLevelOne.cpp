@@ -4,6 +4,7 @@
 
 #include "level/GameLevelOne.h"
 
+#include "enemy/HexagonStage.h"
 #include "enemy/TwinBladeStage.h"
 #include "gameFramework/GameApplication.h"
 #include "framework/World.h"
@@ -28,7 +29,8 @@ namespace ly
 
     void GameLevelOne::InitGameStages()
     {
-        AddStage(shared<TwinBladeStage>(new TwinBladeStage(this)));
+        AddStage(shared<HexagonStage>(new HexagonStage(this)));
+        //AddStage(shared<TwinBladeStage>(new TwinBladeStage(this)));
         // AddStage(shared<WaitStage>(new WaitStage(this, 10.f)));
         // AddStage(shared<VanguardStage>(new VanguardStage(this)));
     }

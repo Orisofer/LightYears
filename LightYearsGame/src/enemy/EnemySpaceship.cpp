@@ -17,7 +17,7 @@ namespace ly
     {
         Spaceship::Tick(deltaTime);
 
-        if (IsActorOutOfWindowBounds(GetGlobalBounds().width + 100))
+        if (IsActorOutOfWindowBounds(GetGlobalBounds().width * 4.f))
         {
             Destroy();
         }

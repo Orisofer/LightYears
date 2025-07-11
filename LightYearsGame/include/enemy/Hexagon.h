@@ -5,11 +5,10 @@
 #ifndef HEXAGON_H
 #define HEXAGON_H
 #include "EnemySpaceship.h"
+#include "weapon/BulletShooter.h"
 
 namespace ly
 {
-    class BulletShooter;
-
     class Hexagon : public EnemySpaceship
     {
     public:
