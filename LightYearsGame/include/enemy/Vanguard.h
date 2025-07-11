@@ -6,10 +6,11 @@
 #define VANGUARD_H
 
 #include "EnemySpaceship.h"
-#include "weapon/BulletShooter.h"
 
 namespace ly
 {
+    class BulletShooter;
+
     class Vanguard : public EnemySpaceship
     {
     public:

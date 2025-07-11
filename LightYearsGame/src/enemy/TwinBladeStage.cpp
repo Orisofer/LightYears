@@ -7,6 +7,7 @@
 #include "enemy/Hexagon.h"
 #include "enemy/TwinBlade.h"
 #include "framework/World.h"
+#include "weapon/BulletShooter.h"
 
 namespace ly
 {
