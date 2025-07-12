@@ -9,11 +9,11 @@ namespace ly
 {
     UFO::UFO(World* owningWorld, const sf::Vector2f& velocity, const std::string& texturePath, float rotationSpeed)
         : EnemySpaceship(owningWorld, texturePath),
-    m_Shooter01(new BulletShooter(this, 1.f, sf::Vector2f(0.f,0.f), -60,
+    m_Shooter01(new BulletShooter(this, .5f, sf::Vector2f(0.f,0.f), -60,
         "SpaceShooterRedux/PNG/Lasers/laserGreen11.png")),
-    m_Shooter02(new BulletShooter(this, 1.f, sf::Vector2f(0.f,0.f), 60,
+    m_Shooter02(new BulletShooter(this, .5f, sf::Vector2f(0.f,0.f), 60,
         "SpaceShooterRedux/PNG/Lasers/laserGreen11.png")),
-    m_Shooter03(new BulletShooter(this, 1.f, sf::Vector2f(0.f,0.f), 180,
+    m_Shooter03(new BulletShooter(this, .5f, sf::Vector2f(0.f,0.f), 180,
         "SpaceShooterRedux/PNG/Lasers/laserGreen11.png")),
     m_RotationSpeed(rotationSpeed)
     {
