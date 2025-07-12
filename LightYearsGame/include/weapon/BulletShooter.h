@@ -18,6 +18,7 @@ namespace ly
             float localRotationOffset = 0, const std::string& texturePath = "SpaceShooterRedux/PNG/Lasers/laserBlue01.png");
         bool IsOnCooldown() const override;
         bool CanShoot() const override;
+        void SetTexturePath(const std::string& texturePath);
     private:
         void ShootImpl() override;
         sf::Clock m_CooldownClock;

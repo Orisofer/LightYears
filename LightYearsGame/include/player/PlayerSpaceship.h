@@ -7,7 +7,7 @@
 
 #include "spaceship/Spaceship.h"
 #include "framework/Core.h"
-#include "weapon/BulletShooter.h"
+#include "weapon/Shooter.h"
 
 namespace ly
 {
@@ -28,7 +28,7 @@ namespace ly
         sf::Vector2f m_MoveInput;
         float m_MoveSpeed;
 
-        std::unique_ptr<BulletShooter> m_BulletShooter;
+        std::unique_ptr<Shooter> m_BulletShooter;
     };
 }
 

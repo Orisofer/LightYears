@@ -37,6 +37,11 @@ namespace ly
         return true;
     }
 
+    void BulletShooter::SetTexturePath(const std::string &texturePath)
+    {
+        m_TexturePath = texturePath;
+    }
+
     void BulletShooter::ShootImpl()
     {
         sf::Vector2f ownerForwardDir = GetOwner()->GetForwardDirection();

@@ -16,6 +16,7 @@ namespace ly
         virtual bool CanShoot() const;
         virtual bool IsOnCooldown() const;
         Actor* GetOwner() const;
+        virtual ~Shooter() = default;
     protected:
         Shooter(Actor* owner);
     private:

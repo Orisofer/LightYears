@@ -13,9 +13,9 @@ namespace ly
     UFOStage::UFOStage(World* owningWorld)
         : GameStage(owningWorld),
     m_SpawnInterval(2.f),
+    m_UFOSpeed(200.f),
     m_SpawnAmount(10),
-    m_CurrentSpawnAmount(0),
-    m_UFOSpeed(200.f)
+    m_CurrentSpawnAmount(0)
     {
 
     }
