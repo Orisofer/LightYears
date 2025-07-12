@@ -6,6 +6,7 @@
 
 #include "enemy/HexagonStage.h"
 #include "enemy/TwinBladeStage.h"
+#include "enemy/UFO.h"
 #include "gameFramework/GameApplication.h"
 #include "framework/World.h"
 #include "framework/Actor.h"
@@ -25,13 +26,22 @@ namespace ly
 
     void GameLevelOne::BeginPlay()
     {
+        // TESTING:
+
+        weak<UFO> ufo = SpawnActor<UFO>(sf::Vector2f{0.f, 0.f});
+        ufo.lock()->SetLocation(sf::Vector2f(GetWindowSize().x / 2.f, 300.f));
     }
 
     void GameLevelOne::InitGameStages()
     {
-        AddStage(shared<HexagonStage>(new HexagonStage(this)));
-        //AddStage(shared<TwinBladeStage>(new TwinBladeStage(this)));
-        // AddStage(shared<WaitStage>(new WaitStage(this, 10.f)));
+
+        // AddStage(shared<TwinBladeStage>(new TwinBladeStage(this)));
+        // AddStage(shared<WaitStage>(new WaitStage(this, 5.f)));
         // AddStage(shared<VanguardStage>(new VanguardStage(this)));
+        // AddStage(shared<WaitStage>(new WaitStage(this, 5.f)));
+        // AddStage(shared<TwinBladeStage>(new TwinBladeStage(this)));
+        // AddStage(shared<WaitStage>(new WaitStage(this, 5.f)));
+        // AddStage(shared<HexagonStage>(new HexagonStage(this)));
+        //AddStage(shared<VanguardStage>(new VanguardStage(this)));
     }
 }

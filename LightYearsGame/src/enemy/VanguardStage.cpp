@@ -7,6 +7,7 @@
 #include "enemy/Vanguard.h"
 #include "weapon/BulletShooter.h"
 
+
 namespace ly
 {
     VanguardStage::VanguardStage(World *world) :
