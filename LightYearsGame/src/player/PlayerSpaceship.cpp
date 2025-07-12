@@ -8,6 +8,7 @@
 #include "framework/MathUtility.h"
 #include "framework/World.h"
 #include "weapon/ThreeWayShooter.h"
+#include "weapon/FrontalWiperShooter.h"
 
 namespace ly
 {
@@ -15,7 +16,7 @@ namespace ly
     : Spaceship{owningWorld, texturePath},
     m_MoveInput{},
     m_MoveSpeed{200.f},
-    m_BulletShooter{new ThreeWayShooter(this, 0.1f, {0.f, 50.f})}
+    m_BulletShooter{new FrontalWiperShooter(this, 0.1f, {0.f, 50.f})}
     {
         // this works like a layer mask for collision detection filtering
         SetTeamID(1);

@@ -59,6 +59,12 @@ namespace ly
 
     void Bullet::Move(float deltaTime)
     {
+        if (m_Owner->IsPendingDestroyed())
+        {
+            Destroy();
+            return;
+        }
+
         sf::Vector2f forwardDir = m_Owner->GetForwardDirection();
 
         sf::Vector2f rotated = ly::RotateVector(forwardDir, m_MoveAngle);

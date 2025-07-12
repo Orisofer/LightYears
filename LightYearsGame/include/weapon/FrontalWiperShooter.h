@@ -2,18 +2,18 @@
 // Created by Ori Sofer on 12/07/2025.
 //
 
-#ifndef THREEWAY_H
-#define THREEWAY_H
+#ifndef FRONTALWIPERSHOOTER_H
+#define FRONTALWIPERSHOOTER_H
 
 #include <SFML/Graphics.hpp>
 #include "weapon/BulletShooter.h"
 
 namespace ly
 {
-    class ThreeWayShooter : public Shooter
+    class FrontalWiperShooter : public Shooter
     {
     public:
-        ThreeWayShooter(Actor* owningActor, float cooldownTime = .3f, const sf::Vector2f& localOffset = sf::Vector2f(0.f,0.f));
+        FrontalWiperShooter(Actor* owningActor, float cooldownTime = .3f, const sf::Vector2f& localOffset = sf::Vector2f(0.f,0.f));
     private:
         virtual void ShootImpl() override;
 
@@ -23,4 +23,4 @@ namespace ly
     };
 }
 
-#endif //THREEWAY_H
+#endif //FRONTALWIPERSHOOTER_H
