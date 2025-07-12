@@ -18,7 +18,8 @@ namespace ly
         virtual void ShootImpl() override;
 
         BulletShooter m_ShooterLeft;
-        BulletShooter m_ShooterMid;
+        BulletShooter m_ShooterMid01;
+        BulletShooter m_ShooterMid02;
         BulletShooter m_ShooterRight;
     };
 }
