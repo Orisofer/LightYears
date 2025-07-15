@@ -17,6 +17,7 @@ namespace ly
         PlayerSpaceship(World* owningWorld, const std::string& texturePath = "SpaceShooterRedux/PNG/playerShip1_blue.png");
         virtual void Tick(float deltaTime) override;
         void SetSpeed(float speed);
+        void SetShooter(unique<Shooter>&& newShooter);
         float GetSpeed() const;
         void Shoot() override;
     private:

@@ -11,9 +11,11 @@
 
 namespace ly
 {
+    class Reward;
     class PlayerSpaceship;
 
     using RewardFunc = std::function<void(PlayerSpaceship*)>;
+    using RewardFactoryFunc = std::function<weak<Reward>(World*)>;
 
     class Reward : public Actor
     {
@@ -28,6 +30,16 @@ namespace ly
         float m_Speed;
         std::function<void(PlayerSpaceship*)> m_RewardFunc; // i know im using "using" but i want to get used to the og syntax
     };
+
+    weak<Reward> CreateHealthReward(World* world);
+    weak<Reward> CreateThreeWay(World* world);
+    weak<Reward> CreateFrontalWiper(World* world);
+
+    weak<Reward> CreateReward(World* world, const std::string& texturePath, RewardFunc rewardFunc, float speed = 200.f);
+
+    void RewardHealth(PlayerSpaceship* player);
+    void RewardThreeWayShooter(PlayerSpaceship* player);
+    void RewardFrontalWiperShooter(PlayerSpaceship* player);
 }
 
 #endif //REWARD_H

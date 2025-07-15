@@ -51,6 +51,12 @@ namespace ly
         return m_Velocity;
     }
 
+    HealthComponent &Spaceship::GetHealthComponent()
+    {
+        return m_HealthComp;
+    }
+
+
     void Spaceship::ApplyDamage(float damage)
     {
         m_HealthComp.ChangeHealth(-damage);

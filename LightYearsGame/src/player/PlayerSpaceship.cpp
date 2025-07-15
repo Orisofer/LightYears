@@ -34,6 +34,11 @@ namespace ly
         m_MoveSpeed = speed;
     }
 
+    void PlayerSpaceship::SetShooter(unique<Shooter>&& newShooter)
+    {
+        m_BulletShooter = std::move(newShooter);
+    }
+
     float PlayerSpaceship::GetSpeed() const
     {
         return m_MoveSpeed;

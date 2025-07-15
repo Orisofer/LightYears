@@ -20,6 +20,7 @@ namespace ly
         virtual void Shoot();
         sf::Vector2f GetVelocity() const;
         virtual void ApplyDamage(float damage) override;
+        HealthComponent& GetHealthComponent();
     private:
         void Blink();
         void UpdateBlink(float deltaTime);
