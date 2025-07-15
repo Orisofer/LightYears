@@ -59,6 +59,9 @@ add_executable(${LIGHT_YEARS_GAME_TARGET_NAME}
 
         ${CMAKE_CURRENT_SOURCE_DIR}/include/level/GameLevelOne.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/level/GameLevelOne.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/reward/Reward.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/reward/Reward.cpp
     )
 
 target_include_directories(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC
