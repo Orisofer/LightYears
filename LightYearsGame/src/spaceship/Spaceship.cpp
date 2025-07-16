@@ -91,6 +91,10 @@ namespace ly
         Blink();
     }
 
+    void Spaceship::Blew()
+    {
+    }
+
     void Spaceship::Blow()
     {
         // Explosion* exp = new Explosion(20, .5f, 2.5f, .7f, 3.4f, 40, 670);
@@ -103,6 +107,9 @@ namespace ly
         // heap version is commented above
         Explosion expStack{20, .5f, 2.5f, .7f, 3.4f, 40, 670};
         expStack.SpawnExplosion(GetWorld(), GetLocation());
+
+        Blew();
+
         Destroy();
     }
 }

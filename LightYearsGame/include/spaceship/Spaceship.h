@@ -26,7 +26,8 @@ namespace ly
         void UpdateBlink(float deltaTime);
         virtual void OnHealthChanged(float amt, float health, float maxHealth);
         virtual void OnTakenDamage(float amt, float health, float maxHealth);
-        virtual void Blow();
+        virtual void Blew();
+        void Blow();
         sf::Vector2f m_Velocity;
         HealthComponent m_HealthComp;
 

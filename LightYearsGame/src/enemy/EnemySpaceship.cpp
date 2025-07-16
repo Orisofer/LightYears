@@ -3,6 +3,8 @@
 //
 
 #include "enemy/EnemySpaceship.h"
+#include "framework/MathUtility.h"
+#include "reward/Reward.h"
 
 namespace ly
 {
@@ -11,6 +13,7 @@ namespace ly
     m_CollisionDamage(collisionDamage)
     {
         SetTeamID(2);
+        SetRewards();
     }
 
     void EnemySpaceship::Tick(float deltaTime)
@@ -23,6 +26,42 @@ namespace ly
         }
     }
 
+    void EnemySpaceship::SetRewards()
+    {
+        m_RewardsMethods =
+        {
+            CreateHealthReward,
+            CreateThreeWayReward,
+            CreateFrontalWiperReward
+        };
+    }
+
+    void EnemySpaceship::SpawnReward()
+    {
+        int randomNum = (int)RandomRange(0, 100);
+
+        if (randomNum <= 40) return;
+
+        weak<Reward> reward;
+
+        if (randomNum >= 41 && randomNum <= 70)
+        {
+            reward = m_RewardsMethods[0](m_OwningWorld);
+        }
+
+        if (randomNum >= 71 && randomNum <= 90)
+        {
+            reward = m_RewardsMethods[1](m_OwningWorld);
+        }
+
+        if (randomNum >= 91 && randomNum <= 100)
+        {
+            reward = m_RewardsMethods[2](m_OwningWorld);
+        }
+
+        reward.lock()->SetLocation(GetLocation());
+    }
+
     void EnemySpaceship::OnActorBeginOverlap(Actor *other)
     {
         Spaceship::OnActorBeginOverlap(other);
@@ -31,5 +70,10 @@ namespace ly
         {
             other->ApplyDamage(m_CollisionDamage);
         }
+    }
+
+    void EnemySpaceship::Blew()
+    {
+        SpawnReward();
     }
 }

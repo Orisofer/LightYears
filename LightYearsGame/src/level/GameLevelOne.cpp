@@ -14,6 +14,7 @@
 #include "enemy/Vanguard.h"
 #include "enemy/VanguardStage.h"
 #include "gameplay/WaitStage.h"
+#include "reward/Reward.h"
 
 namespace ly
 {
@@ -29,6 +30,10 @@ namespace ly
         // Enemy TESTING:
         // weak<UFO> ufo = SpawnActor<UFO>(sf::Vector2f{0.f, 0.f});
         // ufo.lock()->SetLocation(sf::Vector2f(GetWindowSize().x / 2.f, 300.f));
+
+        // reward TESTING
+        // weak<Reward> reward = SpawnActor<Reward>("SpaceShooterRedux/PNG/Power-ups/bolt_gold.png", RewardThreeWayShooter);
+        // reward.lock()->SetLocation(sf::Vector2f(GetWindowSize().x / 2.f, 100.f));
     }
 
     void GameLevelOne::InitGameStages()

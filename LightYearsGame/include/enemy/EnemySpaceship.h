@@ -6,6 +6,7 @@
 #define ENEMYSPACESHIP_H
 
 #include "spaceship/Spaceship.h"
+#include "reward/Reward.h"
 
 namespace ly
 {
@@ -15,9 +16,14 @@ namespace ly
         EnemySpaceship(World* owningWorld, const std::string& texturePath, float collisionDamage = 200.f);
         virtual void Tick(float deltaTime) override;
     private:
+        List<RewardFactoryFunc> m_RewardsMethods;
         float m_CollisionDamage;
 
+        void SetRewards();
+        void SpawnReward();
+
         virtual void OnActorBeginOverlap(Actor *other) override;
+        virtual void Blew() override;
 
     };
 }

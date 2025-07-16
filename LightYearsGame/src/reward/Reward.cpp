@@ -13,8 +13,9 @@ namespace ly
 {
     Reward::Reward(World *owningWorld, const std::string &texturePath, RewardFunc rewardFunc, float speed)
         : Actor(owningWorld, texturePath),
-    m_RewardFunc(rewardFunc),
-    m_Speed(speed)
+    m_Speed(speed),
+    m_RewardFunc(rewardFunc)
+
     {
 
     }
@@ -36,17 +37,18 @@ namespace ly
 
         Normalize(dir);
 
-        SetLocation(dir * m_Speed * deltaTime);
+        AddActorLocationOffset(downWards * m_Speed * deltaTime);
     }
 
     void Reward::OnActorBeginOverlap(Actor *other)
     {
         // todo: clean up casting in the future
-        PlayerSpaceship* player = static_cast<PlayerSpaceship*>(other);
+        PlayerSpaceship* player = dynamic_cast<PlayerSpaceship*>(other);
 
         if (player != nullptr && !player->IsPendingDestroyed())
         {
             m_RewardFunc(player);
+            Destroy();
         }
     }
 
@@ -82,28 +84,25 @@ namespace ly
     {
         static float rewardAmount = 10.f;
 
-        if (player != nullptr && player->IsPendingDestroyed())
+        if (player != nullptr && !player->IsPendingDestroyed())
         {
-            int amt = 10.f;
-
             player->GetHealthComponent().ChangeHealth(rewardAmount);
-
         }
     }
 
     void RewardThreeWayShooter(PlayerSpaceship *player)
     {
-        if (player != nullptr && player->IsPendingDestroyed())
+        if (player != nullptr && !player->IsPendingDestroyed())
         {
-            player->SetShooter(unique<Shooter>{new ThreeWayShooter(player, 0.4f, {0.f, 50.f})});
+            player->SetShooter(unique<Shooter>{new ThreeWayShooter(player, 0.12f, {0.f, 50.f})});
         }
     }
 
     void RewardFrontalWiperShooter(PlayerSpaceship *player)
     {
-        if (player != nullptr && player->IsPendingDestroyed())
+        if (player != nullptr && !player->IsPendingDestroyed())
         {
-            player->SetShooter(unique<Shooter>{new FrontalWiperShooter(player, 0.1f, {0.f, 50.f})});
+            player->SetShooter(unique<Shooter>{new FrontalWiperShooter(player, 0.12f, {0.f, 50.f})});
         }
     }
 

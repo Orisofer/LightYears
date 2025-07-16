@@ -32,8 +32,8 @@ namespace ly
     };
 
     weak<Reward> CreateHealthReward(World* world);
-    weak<Reward> CreateThreeWay(World* world);
-    weak<Reward> CreateFrontalWiper(World* world);
+    weak<Reward> CreateThreeWayReward(World* world);
+    weak<Reward> CreateFrontalWiperReward(World* world);
 
     weak<Reward> CreateReward(World* world, const std::string& texturePath, RewardFunc rewardFunc, float speed = 200.f);
 
