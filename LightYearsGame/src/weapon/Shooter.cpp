@@ -6,7 +6,9 @@
 
 namespace ly
 {
-    Shooter::Shooter(Actor* owner) : m_Owner{owner}
+    Shooter::Shooter(Actor* owner) : m_Owner{owner},
+    m_CurrentLevel(1),
+    m_MaxLevel(4)
     {
 
     }
@@ -27,6 +29,28 @@ namespace ly
     bool Shooter::IsOnCooldown() const
     {
         return false;
+    }
+
+    void Shooter::LevelUp(int amount)
+    {
+        if (amount <= 0) return;
+
+        m_CurrentLevel += amount;
+
+        if (m_CurrentLevel > m_MaxLevel)
+        {
+            m_CurrentLevel = m_MaxLevel;
+        }
+    }
+
+    int Shooter::GetCurrentLevel() const
+    {
+        return m_CurrentLevel;
+    }
+
+    int Shooter::GetMaxLevel() const
+    {
+        return m_MaxLevel;
     }
 
     Actor * Shooter::GetOwner() const

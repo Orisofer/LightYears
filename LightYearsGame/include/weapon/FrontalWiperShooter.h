@@ -13,7 +13,9 @@ namespace ly
     class FrontalWiperShooter : public Shooter
     {
     public:
-        FrontalWiperShooter(Actor* owningActor, float cooldownTime = .3f, const sf::Vector2f& localOffset = sf::Vector2f(0.f,0.f));
+        FrontalWiperShooter(Actor* owningActor, float cooldownTime = .3f,
+            const sf::Vector2f& localOffset = sf::Vector2f(0.f,0.f));
+        virtual void LevelUp(int amount) override;
     private:
         virtual void ShootImpl() override;
 
@@ -21,6 +23,8 @@ namespace ly
         BulletShooter m_ShooterMid01;
         BulletShooter m_ShooterMid02;
         BulletShooter m_ShooterRight;
+        BulletShooter m_MaxLevelShooterRight;
+        BulletShooter m_MaxLevelShooterLeft;
     };
 }
 

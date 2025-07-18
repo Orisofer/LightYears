@@ -19,6 +19,7 @@ namespace ly
         bool IsOnCooldown() const override;
         bool CanShoot() const override;
         void SetTexturePath(const std::string& texturePath);
+        virtual void LevelUp(int amount = 1) override;
     private:
         void ShootImpl() override;
         sf::Clock m_CooldownClock;

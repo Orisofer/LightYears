@@ -23,12 +23,19 @@ namespace ly
 
     bool BulletShooter::IsOnCooldown() const
     {
-        if (m_CooldownClock.getElapsedTime().asSeconds() > m_CooldownTime)
+        float coolDownDecay = 0.02f;
+        float bonusReduction = (-1 + GetCurrentLevel()) * coolDownDecay;
+        if (m_CooldownClock.getElapsedTime().asSeconds() > m_CooldownTime - bonusReduction)
         {
             return false;
         }
 
         return true;
+    }
+
+    void BulletShooter::LevelUp(int amount)
+    {
+        Shooter::LevelUp(amount);
     }
 
     bool BulletShooter::CanShoot() const

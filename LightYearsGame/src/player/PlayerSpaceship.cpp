@@ -16,7 +16,7 @@ namespace ly
     : Spaceship{owningWorld, texturePath},
     m_MoveInput{},
     m_MoveSpeed{200.f},
-    m_BulletShooter{new BulletShooter(this, 0.1f, {0.f, 50.f})}
+    m_BulletShooter{new ThreeWayShooter(this, 0.17f, {0.f, 50.f})}
     {
         // this works like a layer mask for collision detection filtering
         SetTeamID(1);
@@ -36,7 +36,15 @@ namespace ly
 
     void PlayerSpaceship::SetShooter(unique<Shooter>&& newShooter)
     {
-        m_BulletShooter = std::move(newShooter);
+        // if the new shooter is of the same type as the current shooter
+        if (m_BulletShooter != nullptr && typeid(*m_BulletShooter) == typeid(*newShooter))
+        {
+            m_BulletShooter->LevelUp(1);
+        }
+        else
+        {
+            m_BulletShooter = std::move(newShooter);
+        }
     }
 
     float PlayerSpaceship::GetSpeed() const

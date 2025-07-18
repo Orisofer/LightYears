@@ -16,12 +16,17 @@ namespace ly
         virtual bool CanShoot() const;
         virtual bool IsOnCooldown() const;
         Actor* GetOwner() const;
+        virtual void LevelUp(int amount = 1);
+        int GetCurrentLevel() const;
+        int GetMaxLevel() const;
         virtual ~Shooter() = default;
     protected:
         Shooter(Actor* owner);
     private:
         virtual void ShootImpl() = 0;
         Actor* m_Owner;
+        int m_CurrentLevel;
+        int m_MaxLevel;
     };
 }
 
