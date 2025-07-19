@@ -19,10 +19,11 @@ namespace ly
     private:
         virtual void BeginPlay() override;
         virtual void InitGameStages() override;
+        void OnPlayerSpaceshipDestroyed(Actor* actor);
+        void GameOver();
         weak<PlayerSpaceship> m_PlayerSpaceship;
         TimerHandler m_TimerHandler_Test;
     };
-
 }
 
 #endif //GAMELEVELONE_H

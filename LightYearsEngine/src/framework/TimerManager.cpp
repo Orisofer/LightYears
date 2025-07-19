@@ -80,7 +80,6 @@ namespace ly
 
     // --------------------------------------------------------------------------------------------
 
-
     unique<TimerManager> TimerManager::s_Instance{nullptr};
 
     TimerManager::TimerManager() :

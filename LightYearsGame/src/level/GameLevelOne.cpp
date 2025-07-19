@@ -22,16 +22,14 @@ namespace ly
     GameLevelOne::GameLevelOne(Application *owningApp) :
     World(owningApp)
     {
-        // m_PlayerSpaceship = SpawnActor<PlayerSpaceship>();
-        // m_PlayerSpaceship.lock()->SetLocation(sf::Vector2f(owningApp->GetWindowSize().x / 2.f,
-        //     owningApp->GetWindowSize().y / 2.f));
-
     }
 
     void GameLevelOne::BeginPlay()
     {
         Player player = PlayerManager::Get().CreateNewPlayer();
-        player.SpawnSpaceship(this);
+        m_PlayerSpaceship = player.SpawnSpaceship(this);
+        m_PlayerSpaceship.lock()->ActorDestroyed.BindAction(GetWeakRef(), &GameLevelOne::OnPlayerSpaceshipDestroyed);
+
         // Enemy TESTING:
         // weak<UFO> ufo = SpawnActor<UFO>(sf::Vector2f{0.f, 0.f});
         // ufo.lock()->SetLocation(sf::Vector2f(GetWindowSize().x / 2.f, 300.f));
@@ -54,5 +52,24 @@ namespace ly
 
         AddStage(shared<WaitStage>(new WaitStage(this, 5.f)));
         AddStage(shared<UFOStage>(new UFOStage(this)));
+    }
+
+    void GameLevelOne::OnPlayerSpaceshipDestroyed(Actor *actor)
+    {
+        m_PlayerSpaceship = PlayerManager::Get().GetPlayer()->SpawnSpaceship(this);
+
+        if (!m_PlayerSpaceship.expired())
+        {
+            m_PlayerSpaceship.lock()->ActorDestroyed.BindAction(GetWeakRef(), &GameLevelOne::OnPlayerSpaceshipDestroyed);
+        }
+        else
+        {
+            GameOver();
+        }
+    }
+
+    void GameLevelOne::GameOver()
+    {
+        LOG("============ GAME OVER ============");
     }
 }

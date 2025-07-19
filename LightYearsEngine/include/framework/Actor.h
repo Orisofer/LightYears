@@ -4,6 +4,7 @@
 
 #include "framework/Core.h"
 #include "framework/Object.h"
+#include "framework/Delegate.h"
 
 class b2Body;
 
@@ -58,6 +59,8 @@ namespace ly
         static uint8 GetNeutralTeamID();
 
         sf::Sprite& GetSprite();
+
+        Delegate<Actor*> ActorDestroyed;
 
     protected:
         World* m_OwningWorld;
