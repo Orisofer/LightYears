@@ -14,6 +14,7 @@
 #include "enemy/Vanguard.h"
 #include "enemy/VanguardStage.h"
 #include "gameplay/WaitStage.h"
+#include "player/PlayerManager.h"
 #include "reward/Reward.h"
 
 namespace ly
@@ -21,12 +22,16 @@ namespace ly
     GameLevelOne::GameLevelOne(Application *owningApp) :
     World(owningApp)
     {
-        m_PlayerSpaceship = SpawnActor<PlayerSpaceship>();
-        m_PlayerSpaceship.lock()->SetLocation(sf::Vector2f(owningApp->GetWindowSize().x / 2.f, owningApp->GetWindowSize().y / 2.f));
+        // m_PlayerSpaceship = SpawnActor<PlayerSpaceship>();
+        // m_PlayerSpaceship.lock()->SetLocation(sf::Vector2f(owningApp->GetWindowSize().x / 2.f,
+        //     owningApp->GetWindowSize().y / 2.f));
+
     }
 
     void GameLevelOne::BeginPlay()
     {
+        Player player = PlayerManager::Get().CreateNewPlayer();
+        player.SpawnSpaceship(this);
         // Enemy TESTING:
         // weak<UFO> ufo = SpawnActor<UFO>(sf::Vector2f{0.f, 0.f});
         // ufo.lock()->SetLocation(sf::Vector2f(GetWindowSize().x / 2.f, 300.f));

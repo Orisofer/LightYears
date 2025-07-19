@@ -28,13 +28,14 @@ namespace ly
                 windowSize.y - 100.f));
 
             m_OnLifeChanged.Broadcast(GetLifeCount());
+
+            return m_CurrentSpaceship;
         }
         else
         {
             m_OnLifeExhausted.Broadcast();
         }
-
-        return m_CurrentSpaceship;
+        return weak<PlayerSpaceship>();
     }
 
     const weak<PlayerSpaceship> Player::GetSpaceship() const
