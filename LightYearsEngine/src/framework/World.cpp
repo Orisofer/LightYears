@@ -4,6 +4,7 @@
 #include "framework/Actor.h"
 #include "framework/Application.h"
 #include "gameplay/GameStage.h"
+#include "widgets/HUD.h"
 
 namespace ly
 {
@@ -53,6 +54,11 @@ namespace ly
         }
 
         Tick(deltaTime);
+
+        if (m_HUD != nullptr && !m_HUD->HasInit())
+        {
+            m_HUD->NativeInit(m_OwningApp->GetWindow());
+        }
     }
 
     void World::Render(sf::RenderWindow &window)
@@ -62,6 +68,9 @@ namespace ly
             actor->Render(window);
         }
 
+        // we render the hud after we render the actors so all the hud
+        // will be in front
+        RenderHud(window);
     }
 
     void World::CleanCycle()
@@ -77,6 +86,15 @@ namespace ly
                 ++iter;
             }
         }
+    }
+
+    bool World::DispatchEvent(const sf::Event& event)
+    {
+        if (m_HUD)
+        {
+            return m_HUD->HandleEvent(event);
+        }
+        return false;
     }
 
     void World::AddStage(const shared<GameStage> stage)
@@ -105,6 +123,14 @@ namespace ly
     void World::AllGameStagesFinished()
     {
         LOG("World : All Game Stages Finished");
+    }
+
+    void World::RenderHud(sf::RenderWindow& window)
+    {
+        if (m_HUD)
+        {
+            m_HUD->Draw(window);
+        }
     }
 
     void World::NextGameStage()

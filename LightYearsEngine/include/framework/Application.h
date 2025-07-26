@@ -27,13 +27,16 @@ namespace ly
 
         ~Application();
         sf::Vector2u GetWindowSize() const;
-    protected:
-        sf::RenderWindow* GetWindow();
+        sf::RenderWindow& GetWindow();
+        const sf::RenderWindow& GetWindow() const;
+
     private:
         void TickInternal(float deltaTime);
         void RenderInternal();
+        bool DispatchEvent(const sf::Event& event);
         virtual void Tick(float deltaTime);
         virtual void Render();
+
         sf::RenderWindow m_Window;
         sf::Clock m_TickClock;
         sf::Clock m_CleanCycleClock;

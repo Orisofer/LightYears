@@ -42,6 +42,10 @@ namespace ly
                 {
                     m_Window.close();
                 }
+                else
+                {
+                    DispatchEvent(event);
+                }
             }
 
             float frameDeltaTime = m_TickClock.restart().asSeconds();
@@ -94,7 +98,6 @@ namespace ly
 
     void Application::Tick(float deltaTime)
     {
-
     }
 
     void Application::RenderInternal()
@@ -102,6 +105,14 @@ namespace ly
         m_Window.clear();
         Render();
         m_Window.display();
+    }
+
+    bool Application::DispatchEvent(const sf::Event& event)
+    {
+        if (m_CurrentWorld)
+        {
+            return m_CurrentWorld->DispatchEvent(event);
+        }
     }
 
     void Application::Render()
@@ -123,8 +134,13 @@ namespace ly
         return m_Window.getSize();
     }
 
-    sf::RenderWindow * Application::GetWindow()
+    sf::RenderWindow& Application::GetWindow()
     {
-        return &m_Window;
+        return m_Window;
+    }
+
+    const sf::RenderWindow & Application::GetWindow() const
+    {
+        return m_Window;
     }
 }
