@@ -27,7 +27,7 @@ namespace ly
         weak<T> SpawnActor(Args... args);
 
         template<typename HudType, typename... Args>
-        weak<HUD> SpawnHUD(Args... args);
+        weak<HudType> SpawnHUD(Args... args);
 
         virtual ~World();
         sf::Vector2u GetWindowSize() const;
@@ -56,10 +56,10 @@ namespace ly
         return newActor;
     }
 
-    template<typename HudType, typename... Args>
-    weak<HUD> World::SpawnHUD(Args... args)
+    template<typename HudType, typename ...Args>
+    inline weak<HudType> World::SpawnHUD(Args ...args)
     {
-        shared<HudType> newHud{new HudType(args...)};
+        shared<HudType> newHud{new HudType()};
         m_HUD = newHud;
         return newHud;
     }

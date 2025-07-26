@@ -16,6 +16,7 @@
 #include "gameplay/WaitStage.h"
 #include "player/PlayerManager.h"
 #include "reward/Reward.h"
+#include "widgets/GameplayHUD.h"
 
 namespace ly
 {
@@ -28,7 +29,10 @@ namespace ly
     {
         Player player = PlayerManager::Get().CreateNewPlayer();
         m_PlayerSpaceship = player.SpawnSpaceship(this);
-        m_PlayerSpaceship.lock()->ActorDestroyed.BindAction(GetWeakRef(), &GameLevelOne::OnPlayerSpaceshipDestroyed);
+        m_PlayerSpaceship.lock()->ActorDestroyed.BindAction(GetWeakRef(),
+            &GameLevelOne::OnPlayerSpaceshipDestroyed);
+
+        m_GameplayHUD = SpawnHUD<GameplayHUD>(this);
 
         // Enemy TESTING:
         // weak<UFO> ufo = SpawnActor<UFO>(sf::Vector2f{0.f, 0.f});

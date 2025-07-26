@@ -55,9 +55,15 @@ namespace ly
 
         Tick(deltaTime);
 
-        if (m_HUD != nullptr && !m_HUD->HasInit())
+        // tick HUD
+        if (m_HUD != nullptr)
         {
-            m_HUD->NativeInit(m_OwningApp->GetWindow());
+            if (!m_HUD->HasInit())
+            {
+                m_HUD->NativeInit(m_OwningApp->GetWindow());
+            }
+
+            m_HUD->Tick(deltaTime);
         }
     }
 

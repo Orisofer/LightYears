@@ -21,6 +21,11 @@ namespace ly
         }
     }
 
+    void HUD::Tick(float deltaTime)
+    {
+        // no-op
+    }
+
     void HUD::Init(const sf::RenderWindow &windowRef)
     {
 

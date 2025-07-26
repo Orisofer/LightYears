@@ -9,10 +9,9 @@ namespace ly
 {
     WidgetText::WidgetText(const std::string &text, const std::string &fontPath,
         unsigned int fontSize) :
-    m_Font(AssetManager::Get().LoadFont(fontPath)),
-    m_Text(text, *(m_Font.get()), fontSize)
+    m_Font(AssetManager::Get().LoadFont(fontPath))
     {
-
+        m_Text = sf::Text(text, *(m_Font.get()), fontSize);
     }
 
     void WidgetText::SetText(const std::string &text)

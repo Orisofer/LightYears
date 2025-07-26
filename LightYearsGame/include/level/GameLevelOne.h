@@ -11,6 +11,7 @@
 namespace ly
 {
     class PlayerSpaceship;
+    class GameplayHUD;
 
     class GameLevelOne : public World
     {
@@ -22,6 +23,7 @@ namespace ly
         void OnPlayerSpaceshipDestroyed(Actor* actor);
         void GameOver();
         weak<PlayerSpaceship> m_PlayerSpaceship;
+        weak<GameplayHUD> m_GameplayHUD;
         TimerHandler m_TimerHandler_Test;
     };
 }

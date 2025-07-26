@@ -15,6 +15,7 @@ namespace ly
     public:
         virtual void Draw(sf::RenderWindow& windowRef) = 0;
         virtual void NativeInit(const sf::RenderWindow& windowRef);
+        virtual void Tick(float deltaTime);
         bool HasInit();
         virtual bool HandleEvent(const sf::Event& event);
 
