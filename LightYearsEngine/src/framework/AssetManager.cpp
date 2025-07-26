@@ -21,38 +21,18 @@ namespace ly
 
     shared<sf::Texture> AssetManager::LoadTexture(const std::string &texturePath)
     {
-        auto foundIterator = m_TextureMap.find(texturePath);
+        return LoadAsset(texturePath, m_TextureMap);
+    }
 
-        if (foundIterator != m_TextureMap.end())
-        {
-            return foundIterator->second;
-        }
-
-        shared<sf::Texture> toLoad{new sf::Texture};
-
-        if (toLoad->loadFromFile(m_AssetRootDirectory + texturePath))
-        {
-            m_TextureMap.insert({texturePath, toLoad});
-            return toLoad;
-        }
-
-        return shared<sf::Texture>{nullptr};
+    shared<sf::Font> AssetManager::LoadFont(const std::string &fontPath)
+    {
+        return LoadAsset(fontPath, m_FontMap);
     }
 
     void AssetManager::CleanCycle()
     {
-        for (auto iter = m_TextureMap.begin(); iter != m_TextureMap.end();)
-        {
-            if (iter->second.unique())
-            {
-                LOG("Cleaning texture %s", iter->first.c_str());
-                iter = m_TextureMap.erase(iter);
-            }
-            else
-            {
-                ++iter;
-            }
-        }
+        CleanUniqueRef(m_TextureMap);
+        CleanUniqueRef(m_FontMap);
     }
 
     void AssetManager::SetAssetRootDirectory(const std::string &assetRootDirectory)
