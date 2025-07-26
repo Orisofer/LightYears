@@ -7,6 +7,7 @@
 
 #include "widgets/HUD.h"
 #include "widgets/WidgetText.h"
+#include "widgets/WidgetValueGauge.h"
 
 namespace ly
 {
@@ -14,12 +15,13 @@ namespace ly
     {
     public:
         GameplayHUD();
+        virtual void Init(const sf::RenderWindow &windowRef) override;
         virtual void Draw(sf::RenderWindow &windowRef) override;
         virtual void Tick(float deltaTime) override;
 
     private:
         WidgetText m_FpsCounter;
-        float m_PreviousFrameTime;
+        WidgetValueGauge m_HealthBar;
     };
 }
 
