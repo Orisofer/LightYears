@@ -11,7 +11,6 @@
 #include "framework/World.h"
 #include "framework/Actor.h"
 #include "player/PlayerSpaceship.h"
-#include "enemy/Vanguard.h"
 #include "enemy/VanguardStage.h"
 #include "gameplay/WaitStage.h"
 #include "player/PlayerManager.h"
@@ -27,7 +26,7 @@ namespace ly
 
     void GameLevelOne::BeginPlay()
     {
-        Player player = PlayerManager::Get().CreateNewPlayer();
+        Player& player = PlayerManager::Get().CreateNewPlayer();
         m_PlayerSpaceship = player.SpawnSpaceship(this);
         m_PlayerSpaceship.lock()->ActorDestroyed.BindAction(GetWeakRef(),
             &GameLevelOne::OnPlayerSpaceshipDestroyed);

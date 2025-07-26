@@ -27,6 +27,7 @@ namespace ly
 
     void WidgetValueGauge::UpdateValue(float value, float maxValue)
     {
+        LOG("player health is: %f", value);
         if (maxValue == 0) return;
 
         std::string valueDisplayString = std::to_string((int)value) + " / " + std::to_string((int)maxValue);

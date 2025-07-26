@@ -23,7 +23,7 @@ namespace ly
 
         if (m_Health < 0)
         {
-            m_MaxHealth = 0;
+            m_Health = 0;
         }
 
         if (m_Health > m_MaxHealth)
@@ -31,21 +31,23 @@ namespace ly
             m_Health = m_MaxHealth;
         }
 
-        if (amt < 0)
-        {
-            TakeDamage(-amt);
+        onHealthChanged.Broadcast(amt, m_Health, m_MaxHealth);
 
+        if (amt > 0)
+        {
+            Heal(amt);
+        }
+        else
+        {
             if (m_Health <= 0)
             {
                 HealthEmpty();
             }
+            else
+            {
+                TakeDamage(-amt);
+            }
         }
-        else
-        {
-            Heal(amt);
-        }
-
-        onHealthChanged.Broadcast(amt, m_Health, m_MaxHealth);
     }
 
     float HealthComponent::GetHealth()
@@ -65,7 +67,7 @@ namespace ly
 
     void HealthComponent::Heal(float amt)
     {
-        onTakenDamage.Broadcast(amt, m_Health, m_MaxHealth);
+        onHealthChanged.Broadcast(amt, m_Health, m_MaxHealth);
     }
 
     void HealthComponent::HealthEmpty()

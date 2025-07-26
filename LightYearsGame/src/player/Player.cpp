@@ -31,10 +31,10 @@ namespace ly
 
             return m_CurrentSpaceship;
         }
-        else
-        {
-            m_OnLifeExhausted.Broadcast();
-        }
+
+        m_CurrentSpaceship = weak<PlayerSpaceship>();
+        m_OnLifeExhausted.Broadcast();
+
         return weak<PlayerSpaceship>();
     }
 

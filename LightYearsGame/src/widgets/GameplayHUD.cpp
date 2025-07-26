@@ -3,6 +3,9 @@
 //
 
 #include "widgets/GameplayHUD.h"
+#include "player/PlayerManager.h"
+#include "player/Player.h"
+#include "player/PlayerSpaceship.h"
 
 namespace ly
 {
@@ -15,6 +18,7 @@ namespace ly
 
     void GameplayHUD::Init(const sf::RenderWindow &windowRef)
     {
+        // init health bar graphics
         float healthBarPosX = 10.f;
 
         float halfBarYSize = m_HealthBar.GetBarSize().y / 2.f;
@@ -22,7 +26,8 @@ namespace ly
 
         float healthBarPosY = windowRef.getSize().y - halfBarYSize - padding;
         m_HealthBar.SetLocation(sf::Vector2f(healthBarPosX, healthBarPosY));
-        m_HealthBar.UpdateValue(100.f, 200.f);
+
+        RefreshHealthBar();
     }
 
     void GameplayHUD::Draw(sf::RenderWindow &windowRef)
@@ -38,5 +43,33 @@ namespace ly
         int frameRate = int(1 / deltaTime);
         std::string frameRateString = "Frame Rate: " + std::to_string(frameRate);
         m_FpsCounter.SetText(frameRateString);
+    }
+
+    void GameplayHUD::OnPlayerHealthUpdated(float amt, float health, float maxHealth)
+    {
+        m_HealthBar.UpdateValue(health, maxHealth);
+    }
+
+    void GameplayHUD::OnPlayerSpaceshipDestroyed(Actor* spaceship)
+    {
+        RefreshHealthBar();
+    }
+
+    void GameplayHUD::RefreshHealthBar()
+    {
+        // init health bar logic
+        Player* player = PlayerManager::Get().GetPlayer();
+
+        if (player != nullptr && !player->GetSpaceship().expired())
+        {
+            weak<PlayerSpaceship> playerSpaceship = player->GetSpaceship();
+
+            playerSpaceship.lock()->ActorDestroyed.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerSpaceshipDestroyed);
+
+            HealthComponent& healthComponent = player->GetSpaceship().lock()->GetHealthComponent();
+            healthComponent.onHealthChanged.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerHealthUpdated);
+
+            m_HealthBar.UpdateValue(healthComponent.GetHealth(), healthComponent.GetMaxHealth());
+        }
     }
 }
