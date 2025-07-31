@@ -22,11 +22,14 @@ namespace ly
             const sf::Color& textColor = sf::Color(20,20,20,255));
         void UpdateValue(float value, float maxValue);
         sf::Vector2f GetBarSize() const;
+        sf::FloatRect GetBounds() const override;
+        sf::Vector2f GetCenter() const override;
 
     private:
         virtual void LocationUpdated(const sf::Vector2f &newLocation) override;
         virtual void RotationUpdated(float newRotation) override;
         virtual void Draw(sf::RenderWindow &windowRef) override;
+        void CenterText();
         sf::RectangleShape m_GaugeFrontRect;
         sf::RectangleShape m_GaugeBackgroundRect;
 

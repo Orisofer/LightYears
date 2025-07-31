@@ -21,7 +21,8 @@ namespace ly
         sf::Vector2f GetLocation() const;
         float GetRotation() const;
         bool GetVisibility() const;
-
+        virtual sf::FloatRect GetBounds() const;
+        virtual sf::Vector2f GetCenter() const;
     protected:
         Widget();
 

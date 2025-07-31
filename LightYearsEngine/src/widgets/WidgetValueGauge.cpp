@@ -62,11 +62,24 @@ namespace ly
         sf::Vector2f newFrontSize = sf::Vector2f(newFrontSizeX, barSize.y);
         m_GaugeFrontRect.setSize(newFrontSize);
         m_GaugeFrontRect.setFillColor(barColor);
+
+        CenterText();
     }
 
     sf::Vector2f WidgetValueGauge::GetBarSize() const
     {
         return m_GaugeBackgroundRect.getSize();
+    }
+
+    sf::FloatRect WidgetValueGauge::GetBounds() const
+    {
+        sf::FloatRect bounds = m_GaugeBackgroundRect.getGlobalBounds();
+        return bounds;
+    }
+
+    sf::Vector2f WidgetValueGauge::GetCenter() const
+    {
+        return Widget::GetCenter();
     }
 
     void WidgetValueGauge::Draw(sf::RenderWindow &windowRef)
@@ -76,16 +89,20 @@ namespace ly
         windowRef.draw(m_Text);
     }
 
+    void WidgetValueGauge::CenterText()
+    {
+        sf::FloatRect textSize = m_Text.getGlobalBounds();
+
+        sf::Vector2f center = GetCenter();
+        m_Text.setPosition(center - sf::Vector2f(textSize.width / 2.f, textSize.height));
+    }
+
     void WidgetValueGauge::LocationUpdated(const sf::Vector2f &newLocation)
     {
         m_GaugeBackgroundRect.setPosition(newLocation);
         m_GaugeFrontRect.setPosition(newLocation);
 
-        sf::Vector2f barSize = m_GaugeBackgroundRect.getSize();
-        float padding = 22.f;
-        float centerTextX = newLocation.x + (barSize.x / 2) - padding;
-        sf::Vector2f centerText = sf::Vector2f(centerTextX, newLocation.y);
-        m_Text.setPosition(centerText);
+        CenterText();
     }
 
     void WidgetValueGauge::RotationUpdated(float newRotation)
@@ -93,5 +110,7 @@ namespace ly
         m_Text.setRotation(newRotation);
         m_GaugeBackgroundRect.setRotation(newRotation);
         m_GaugeFrontRect.setRotation(newRotation);
+
+        CenterText();
     }
 }

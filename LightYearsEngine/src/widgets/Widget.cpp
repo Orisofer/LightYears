@@ -74,4 +74,16 @@ namespace ly
     {
         return m_IsVisible;
     }
+
+    sf::FloatRect Widget::GetBounds() const
+    {
+        return sf::FloatRect();
+    }
+
+    sf::Vector2f Widget::GetCenter() const
+    {
+        sf::FloatRect bounds = GetBounds();
+        sf::Vector2f center = {bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f};
+        return center;
+    }
 }

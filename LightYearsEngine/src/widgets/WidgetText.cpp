@@ -24,6 +24,17 @@ namespace ly
         m_Text.setCharacterSize(size);
     }
 
+    sf::FloatRect WidgetText::GetBounds() const
+    {
+        sf::FloatRect bounds = m_Text.getGlobalBounds();
+        return bounds;
+    }
+
+    sf::Vector2f WidgetText::GetCenter() const
+    {
+        return Widget::GetCenter();
+    }
+
     void WidgetText::Draw(sf::RenderWindow& windowRef)
     {
         windowRef.draw(m_Text);

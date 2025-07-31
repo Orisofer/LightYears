@@ -11,7 +11,8 @@ namespace ly
 {
     GameplayHUD::GameplayHUD() :
     m_FpsCounter("Frame rate:"),
-    m_HealthBar()
+    m_HealthBar(),
+    m_PlayerLiveIcon("/SpaceShooterRedux/PNG/playerShip1_blue.png")
     {
 
     }
@@ -20,20 +21,26 @@ namespace ly
     {
         // init health bar graphics
         float healthBarPosX = 10.f;
-
+        float healthBarPadding = 15.f;
         float halfBarYSize = m_HealthBar.GetBarSize().y / 2.f;
-        float padding = 15.f;
 
-        float healthBarPosY = windowRef.getSize().y - halfBarYSize - padding;
+        float healthBarPosY = windowRef.getSize().y - halfBarYSize - healthBarPadding;
         m_HealthBar.SetLocation(sf::Vector2f(healthBarPosX, healthBarPosY));
 
         RefreshHealthBar();
+
+        // init player Lives Icon
+        float healthIconPadding = 10.f;
+        float healthIconPosX = healthBarPosX + m_HealthBar.GetBarSize().x + healthIconPadding;
+        m_PlayerLiveIcon.SetLocation(sf::Vector2f(healthIconPosX, healthBarPosY - 2));
+        m_PlayerLiveIcon.SetSizeMultiplier(.25f);
     }
 
     void GameplayHUD::Draw(sf::RenderWindow &windowRef)
     {
         m_FpsCounter.NativeDraw(windowRef);
         m_HealthBar.NativeDraw(windowRef);
+        m_PlayerLiveIcon.NativeDraw(windowRef);
     }
 
     void GameplayHUD::Tick(float deltaTime)

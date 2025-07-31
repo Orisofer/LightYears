@@ -18,7 +18,8 @@ namespace ly
             unsigned int fontSize = 10);
         void SetText(const std::string& text);
         void SetTextSize(unsigned int size);
-
+        sf::FloatRect GetBounds() const override;
+        sf::Vector2f GetCenter() const override;
     private:
         virtual void Draw(sf::RenderWindow& windowRef) override;
         virtual void LocationUpdated(const sf::Vector2f &newLocation) override;

@@ -7,6 +7,7 @@
 
 #include "framework/Actor.h"
 #include "widgets/HUD.h"
+#include "widgets/WidgetImage.h"
 #include "widgets/WidgetText.h"
 #include "widgets/WidgetValueGauge.h"
 
@@ -27,6 +28,7 @@ namespace ly
         void RefreshHealthBar();
         WidgetText m_FpsCounter;
         WidgetValueGauge m_HealthBar;
+        WidgetImage m_PlayerLiveIcon;
     };
 }
 
