@@ -28,7 +28,7 @@ namespace ly
         unsigned int GetScore() const;
 
         Delegate<int> m_OnLifeChanged;
-        Delegate<int> m_OnScoreChanged;
+        Delegate<unsigned int> m_OnScoreChanged;
         Delegate<> m_OnLifeExhausted;
 
     private:

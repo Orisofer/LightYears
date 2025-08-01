@@ -2,6 +2,7 @@
 // Created by Ori Sofer on 03/05/2025.
 //
 
+#include "player/PlayerManager.h"
 #include "enemy/EnemySpaceship.h"
 #include "framework/MathUtility.h"
 #include "reward/Reward.h"
@@ -10,7 +11,8 @@ namespace ly
 {
     EnemySpaceship::EnemySpaceship(World *owningWorld, const std::string &texturePath, float collisionDamage) :
     Spaceship(owningWorld, texturePath),
-    m_CollisionDamage(collisionDamage)
+    m_CollisionDamage(collisionDamage),
+    m_ScoreAmount(10)
     {
         SetTeamID(2);
         SetRewards();
@@ -24,6 +26,11 @@ namespace ly
         {
             Destroy();
         }
+    }
+
+    void EnemySpaceship::SetScoreAmount(unsigned int amount)
+    {
+        m_ScoreAmount = amount;
     }
 
     void EnemySpaceship::SetRewards()
@@ -74,6 +81,13 @@ namespace ly
 
     void EnemySpaceship::Blew()
     {
+        Player* player = PlayerManager::Get().GetPlayer();
+
+        if (player != nullptr && !player->IsPendingDestroyed())
+        {
+            player->AddScore(m_ScoreAmount);
+        }
+
         SpawnReward();
     }
 }

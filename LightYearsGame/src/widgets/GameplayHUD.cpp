@@ -12,8 +12,10 @@ namespace ly
     GameplayHUD::GameplayHUD() :
     m_FpsCounter("Frame rate:"),
     m_LifeCounter("X"),
+    m_ScoreCounter("no-score"),
     m_HealthBar(),
-    m_PlayerLiveIcon("/SpaceShooterRedux/PNG/playerShip1_blue.png")
+    m_PlayerLiveIcon("/SpaceShooterRedux/PNG/playerShip1_blue.png"),
+    m_PlayerScoreIcon("/SpaceShooterRedux/PNG/Power-ups/star_gold.png")
     {
 
     }
@@ -42,7 +44,19 @@ namespace ly
         m_LifeCounter.SetLocation(sf::Vector2f(LifeCounterPosX, healthBarPosY - 7));
         m_LifeCounter.SetTextSize(20);
 
-        RefreshLifeCounter();
+        // init score icon
+        float scoreIconPadding = 10.f;
+        float scoreIconPosX = LifeCounterPosX + m_LifeCounter.GetBounds().width + scoreIconPadding;
+        m_PlayerScoreIcon.SetLocation(sf::Vector2f(scoreIconPosX, healthBarPosY));
+        m_PlayerScoreIcon.SetSizeMultiplier(.5f);
+
+        // init score counter
+        float scoreCounterPaddingX = 10.f;
+        float scoreCounterPosX = scoreIconPosX + m_PlayerScoreIcon.GetBounds().width + scoreCounterPaddingX;
+        m_ScoreCounter.SetLocation(sf::Vector2f(scoreCounterPosX, healthBarPosY - 7));
+        m_ScoreCounter.SetTextSize(20);
+
+        RegisterPlayerData();
     }
 
     void GameplayHUD::Draw(sf::RenderWindow &windowRef)
@@ -51,6 +65,8 @@ namespace ly
         m_HealthBar.NativeDraw(windowRef);
         m_PlayerLiveIcon.NativeDraw(windowRef);
         m_LifeCounter.NativeDraw(windowRef);
+        m_PlayerScoreIcon.NativeDraw(windowRef);
+        m_ScoreCounter.NativeDraw(windowRef);
     }
 
     void GameplayHUD::Tick(float deltaTime)
@@ -69,13 +85,43 @@ namespace ly
 
     void GameplayHUD::OnPlayerSpaceshipDestroyed(Actor* spaceship)
     {
+        RegisterPlayerData();
         RefreshHealthBar();
-        RefreshLifeCounter();
+    }
+
+    void GameplayHUD::OnPlayerScoreChanged(unsigned int score)
+    {
+        RefreshPlayerScore(score);
     }
 
     void GameplayHUD::OnPlayerLifeExhausted()
     {
-        m_LifeCounter.SetText(":-(");
+        m_LifeCounter.SetText("-");
+    }
+
+    void GameplayHUD::RefreshPlayerScore(unsigned int score)
+    {
+        m_ScoreCounter.SetText(std::to_string(score));
+    }
+
+    void GameplayHUD::RefreshPlayerLives(int lives)
+    {
+        m_LifeCounter.SetText(std::to_string(lives));
+    }
+
+    void GameplayHUD::RegisterPlayerData()
+    {
+        Player* player = PlayerManager::Get().GetPlayer();
+
+        if (player != nullptr && !player->GetSpaceship().expired())
+        {
+            player->m_OnLifeExhausted.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerLifeExhausted);
+            player->m_OnScoreChanged.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerScoreChanged);
+
+            int lifeCount = player->GetLifeCount();
+
+            RefreshPlayerLives(lifeCount);
+        }
     }
 
     void GameplayHUD::RefreshHealthBar()
@@ -93,19 +139,6 @@ namespace ly
             healthComponent.onHealthChanged.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerHealthUpdated);
 
             m_HealthBar.UpdateValue(healthComponent.GetHealth(), healthComponent.GetMaxHealth());
-        }
-    }
-
-    void GameplayHUD::RefreshLifeCounter()
-    {
-        Player* player = PlayerManager::Get().GetPlayer();
-
-        if (player != nullptr && !player->GetSpaceship().expired())
-        {
-            player->m_OnLifeExhausted.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerLifeExhausted);
-
-            int lifeCount = player->GetLifeCount();
-            m_LifeCounter.SetText(std::to_string(lifeCount));
         }
     }
 }

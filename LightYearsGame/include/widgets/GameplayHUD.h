@@ -21,17 +21,21 @@ namespace ly
         virtual void Draw(sf::RenderWindow &windowRef) override;
         virtual void Tick(float deltaTime) override;
 
-
     private:
         void OnPlayerHealthUpdated(float amt, float health, float maxHealth);
         void OnPlayerSpaceshipDestroyed(Actor* spaceship);
+        void OnPlayerScoreChanged(unsigned int score);
+        void RegisterPlayerData();
         void OnPlayerLifeExhausted();
         void RefreshHealthBar();
-        void RefreshLifeCounter();
+        void RefreshPlayerScore(unsigned int score);
+        void RefreshPlayerLives(int lives);
         WidgetText m_FpsCounter;
         WidgetText m_LifeCounter;
+        WidgetText m_ScoreCounter;
         WidgetValueGauge m_HealthBar;
         WidgetImage m_PlayerLiveIcon;
+        WidgetImage m_PlayerScoreIcon;
     };
 }
 

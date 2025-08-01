@@ -15,16 +15,17 @@ namespace ly
     public:
         EnemySpaceship(World* owningWorld, const std::string& texturePath, float collisionDamage = 200.f);
         virtual void Tick(float deltaTime) override;
-    private:
-        List<RewardFactoryFunc> m_RewardsMethods;
-        float m_CollisionDamage;
+        void SetScoreAmount(unsigned int amount);
 
+    private:
+        virtual void OnActorBeginOverlap(Actor *other) override;
+        virtual void Blew() override;
         void SetRewards();
         void SpawnReward();
 
-        virtual void OnActorBeginOverlap(Actor *other) override;
-        virtual void Blew() override;
-
+        List<RewardFactoryFunc> m_RewardsMethods;
+        float m_CollisionDamage;
+        unsigned int m_ScoreAmount;
     };
 }
 
