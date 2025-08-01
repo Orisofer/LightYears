@@ -3,7 +3,13 @@
 
 namespace ly
 {
-    Object::Object() : m_IsPendingDestroyed{false} {}
+    unsigned int Object::s_UniqueIdCounter = 0;
+
+    Object::Object() :
+    m_IsPendingDestroyed{false},
+    m_UniqueId(GetNextAvailableID())
+    {
+    }
 
     void Object::Destroy()
     {
@@ -29,5 +35,15 @@ namespace ly
     Object::~Object()
     {
         LOG("Object Destroyed");
+    }
+
+    unsigned int Object::GetUniqueID() const
+    {
+        return m_UniqueId;
+    }
+
+    unsigned int Object::GetNextAvailableID()
+    {
+        return s_UniqueIdCounter++;
     }
 }
