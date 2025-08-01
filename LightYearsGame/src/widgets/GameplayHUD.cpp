@@ -11,6 +11,7 @@ namespace ly
 {
     GameplayHUD::GameplayHUD() :
     m_FpsCounter("Frame rate:"),
+    m_LifeCounter("X"),
     m_HealthBar(),
     m_PlayerLiveIcon("/SpaceShooterRedux/PNG/playerShip1_blue.png")
     {
@@ -34,6 +35,14 @@ namespace ly
         float healthIconPosX = healthBarPosX + m_HealthBar.GetBarSize().x + healthIconPadding;
         m_PlayerLiveIcon.SetLocation(sf::Vector2f(healthIconPosX, healthBarPosY - 2));
         m_PlayerLiveIcon.SetSizeMultiplier(.25f);
+
+        // init life counter text
+        float lifeCounterPadding = 25.f;
+        float LifeCounterPosX = healthIconPosX + m_LifeCounter.GetBounds().width + lifeCounterPadding;
+        m_LifeCounter.SetLocation(sf::Vector2f(LifeCounterPosX, healthBarPosY - 7));
+        m_LifeCounter.SetTextSize(20);
+
+        RefreshLifeCounter();
     }
 
     void GameplayHUD::Draw(sf::RenderWindow &windowRef)
@@ -41,6 +50,7 @@ namespace ly
         m_FpsCounter.NativeDraw(windowRef);
         m_HealthBar.NativeDraw(windowRef);
         m_PlayerLiveIcon.NativeDraw(windowRef);
+        m_LifeCounter.NativeDraw(windowRef);
     }
 
     void GameplayHUD::Tick(float deltaTime)
@@ -60,6 +70,12 @@ namespace ly
     void GameplayHUD::OnPlayerSpaceshipDestroyed(Actor* spaceship)
     {
         RefreshHealthBar();
+        RefreshLifeCounter();
+    }
+
+    void GameplayHUD::OnPlayerLifeExhausted()
+    {
+        m_LifeCounter.SetText(":-(");
     }
 
     void GameplayHUD::RefreshHealthBar()
@@ -77,6 +93,19 @@ namespace ly
             healthComponent.onHealthChanged.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerHealthUpdated);
 
             m_HealthBar.UpdateValue(healthComponent.GetHealth(), healthComponent.GetMaxHealth());
+        }
+    }
+
+    void GameplayHUD::RefreshLifeCounter()
+    {
+        Player* player = PlayerManager::Get().GetPlayer();
+
+        if (player != nullptr && !player->GetSpaceship().expired())
+        {
+            player->m_OnLifeExhausted.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerLifeExhausted);
+
+            int lifeCount = player->GetLifeCount();
+            m_LifeCounter.SetText(std::to_string(lifeCount));
         }
     }
 }

@@ -25,8 +25,11 @@ namespace ly
     private:
         void OnPlayerHealthUpdated(float amt, float health, float maxHealth);
         void OnPlayerSpaceshipDestroyed(Actor* spaceship);
+        void OnPlayerLifeExhausted();
         void RefreshHealthBar();
+        void RefreshLifeCounter();
         WidgetText m_FpsCounter;
+        WidgetText m_LifeCounter;
         WidgetValueGauge m_HealthBar;
         WidgetImage m_PlayerLiveIcon;
     };

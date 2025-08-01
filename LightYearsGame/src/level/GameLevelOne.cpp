@@ -59,6 +59,13 @@ namespace ly
 
     void GameLevelOne::OnPlayerSpaceshipDestroyed(Actor *actor)
     {
+        Player* player = PlayerManager::Get().GetPlayer();
+
+        if (player != nullptr)
+        {
+            player->RemoveLifeCount(1);
+        }
+
         m_PlayerSpaceship = PlayerManager::Get().GetPlayer()->SpawnSpaceship(this);
 
         if (!m_PlayerSpaceship.expired())

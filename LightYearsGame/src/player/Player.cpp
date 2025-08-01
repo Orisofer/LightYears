@@ -18,8 +18,6 @@ namespace ly
     {
         if (m_LifeCount > 0)
         {
-            m_LifeCount--;
-
             auto windowSize = world->GetWindowSize();
 
             m_CurrentSpaceship = world->SpawnActor<PlayerSpaceship>();
@@ -46,6 +44,13 @@ namespace ly
     void Player::AddLifeCount(unsigned int count)
     {
         m_LifeCount += count;
+
+        m_OnLifeChanged.Broadcast(GetLifeCount());
+    }
+
+    void Player::RemoveLifeCount(unsigned int count)
+    {
+        m_LifeCount -= count;
 
         m_OnLifeChanged.Broadcast(GetLifeCount());
     }

@@ -21,6 +21,7 @@ namespace ly
         const weak<PlayerSpaceship> GetSpaceship() const;
 
         void AddLifeCount(unsigned int count);
+        void RemoveLifeCount(unsigned int count);
         unsigned int GetLifeCount() const;
 
         void AddScore(unsigned int score);
