@@ -15,7 +15,8 @@ namespace ly
     m_ScoreCounter("no-score"),
     m_HealthBar(),
     m_PlayerLiveIcon("/SpaceShooterRedux/PNG/playerShip1_blue.png"),
-    m_PlayerScoreIcon("/SpaceShooterRedux/PNG/Power-ups/star_gold.png")
+    m_PlayerScoreIcon("/SpaceShooterRedux/PNG/Power-ups/star_gold.png"),
+    m_Button()
     {
 
     }
@@ -67,6 +68,7 @@ namespace ly
         m_LifeCounter.NativeDraw(windowRef);
         m_PlayerScoreIcon.NativeDraw(windowRef);
         m_ScoreCounter.NativeDraw(windowRef);
+        m_Button.NativeDraw(windowRef);
     }
 
     void GameplayHUD::Tick(float deltaTime)

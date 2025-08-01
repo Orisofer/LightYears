@@ -10,6 +10,7 @@
 #include "widgets/WidgetImage.h"
 #include "widgets/WidgetText.h"
 #include "widgets/WidgetValueGauge.h"
+#include "widgets/WidgetButton.h"
 
 namespace ly
 {
@@ -31,12 +32,15 @@ namespace ly
         void RefreshHealthBar();
         void RefreshPlayerScore(unsigned int score);
         void RefreshPlayerLives(int lives);
+
+    private:
         WidgetText m_FpsCounter;
         WidgetText m_LifeCounter;
         WidgetText m_ScoreCounter;
         WidgetValueGauge m_HealthBar;
         WidgetImage m_PlayerLiveIcon;
         WidgetImage m_PlayerScoreIcon;
+        WidgetButton m_Button;
     };
 }
 
