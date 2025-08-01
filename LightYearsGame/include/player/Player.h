@@ -34,6 +34,7 @@ namespace ly
     private:
         weak<PlayerSpaceship> m_CurrentSpaceship;
         unsigned int m_LifeCount;
+        unsigned int m_MaxLife;
         unsigned int m_Score;
     };
 }

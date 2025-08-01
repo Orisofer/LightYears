@@ -94,6 +94,11 @@ namespace ly
         RefreshPlayerScore(score);
     }
 
+    void GameplayHUD::OnPlayerLifeChanged(int life)
+    {
+        RefreshPlayerLives(life);
+    }
+
     void GameplayHUD::OnPlayerLifeExhausted()
     {
         m_LifeCounter.SetText("-");
@@ -117,6 +122,7 @@ namespace ly
         {
             player->m_OnLifeExhausted.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerLifeExhausted);
             player->m_OnScoreChanged.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerScoreChanged);
+            player->m_OnLifeChanged.BindAction(GetWeakRef(), &GameplayHUD::OnPlayerLifeChanged);
 
             int lifeCount = player->GetLifeCount();
 

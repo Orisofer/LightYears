@@ -25,6 +25,7 @@ namespace ly
         void OnPlayerHealthUpdated(float amt, float health, float maxHealth);
         void OnPlayerSpaceshipDestroyed(Actor* spaceship);
         void OnPlayerScoreChanged(unsigned int score);
+        void OnPlayerLifeChanged(int life);
         void RegisterPlayerData();
         void OnPlayerLifeExhausted();
         void RefreshHealthBar();

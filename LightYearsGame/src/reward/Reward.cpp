@@ -83,6 +83,13 @@ namespace ly
         return CreateReward(world, "SpaceShooterRedux/PNG/Power-ups/pill_green.png", RewardHealth);
     }
 
+    weak<Reward> CreateLifeReward(World *world)
+    {
+        weak<Reward> lifeReward = CreateReward(world, "/SpaceShooterRedux/PNG/playerShip1_blue.png", RewardLife);
+        lifeReward.lock()->SetSizeMultiplier(.25);
+        return lifeReward;
+    }
+
     weak<Reward> CreateThreeWayReward(World *world)
     {
         return CreateReward(world, "SpaceShooterRedux/PNG/Power-ups/things_bronze.png", RewardThreeWayShooter);
@@ -100,6 +107,16 @@ namespace ly
         if (player != nullptr && !player->IsPendingDestroyed())
         {
             player->GetHealthComponent().ChangeHealth(rewardAmount);
+        }
+    }
+
+    void RewardLife(PlayerSpaceship *player)
+    {
+        Player* playerPtr = PlayerManager::Get().GetPlayer();
+
+        if (playerPtr != nullptr && !playerPtr->IsPendingDestroyed())
+        {
+            playerPtr->AddLifeCount(1);
         }
     }
 

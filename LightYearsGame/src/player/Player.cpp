@@ -10,6 +10,7 @@ namespace ly
 {
     Player::Player() :
     m_LifeCount(3),
+    m_MaxLife(10),
     m_Score(0)
     {
     }
@@ -43,7 +44,14 @@ namespace ly
 
     void Player::AddLifeCount(unsigned int count)
     {
-        m_LifeCount += count;
+        if (m_LifeCount + count >= m_MaxLife)
+        {
+            m_LifeCount = m_MaxLife;
+        }
+        else
+        {
+            m_LifeCount += count;
+        }
 
         m_OnLifeChanged.Broadcast(GetLifeCount());
     }

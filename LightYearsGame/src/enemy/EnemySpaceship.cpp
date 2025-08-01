@@ -38,6 +38,7 @@ namespace ly
         m_RewardsMethods =
         {
             CreateHealthReward,
+            CreateLifeReward,
             CreateThreeWayReward,
             CreateFrontalWiperReward
         };
@@ -51,19 +52,24 @@ namespace ly
 
         weak<Reward> reward;
 
-        if (randomNum >= 41 && randomNum <= 70)
+        if (randomNum >= 41 && randomNum <= 64)
         {
             reward = m_RewardsMethods[0](m_OwningWorld);
         }
 
-        if (randomNum >= 71 && randomNum <= 90)
+        if (randomNum >= 65 && randomNum <= 79)
         {
             reward = m_RewardsMethods[1](m_OwningWorld);
         }
 
-        if (randomNum >= 91 && randomNum <= 100)
+        if (randomNum >= 80 && randomNum <= 92)
         {
             reward = m_RewardsMethods[2](m_OwningWorld);
+        }
+
+        if (randomNum >= 93 && randomNum <= 100)
+        {
+            reward = m_RewardsMethods[3](m_OwningWorld);
         }
 
         reward.lock()->SetLocation(GetLocation());

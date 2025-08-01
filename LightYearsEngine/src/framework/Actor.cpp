@@ -106,6 +106,11 @@ namespace ly
         SetRotation(GetRotation() + rotationOffset);
     }
 
+    void Actor::SetSizeMultiplier(float multiplier)
+    {
+        m_Sprite.setScale(multiplier, multiplier);
+    }
+
     sf::Vector2f Actor::GetLocation() const
     {
         return m_Sprite.getPosition();

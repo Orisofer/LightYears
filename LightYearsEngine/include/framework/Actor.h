@@ -28,6 +28,7 @@ namespace ly
         void SetRotation(float rotation);
         void AddActorLocationOffset(const sf::Vector2f& offset);
         void AddActorRotationOffset(float rotationOffset);
+        void SetSizeMultiplier(float multiplier);
         float GetRotation();
 
         sf::Vector2f GetLocation() const;
