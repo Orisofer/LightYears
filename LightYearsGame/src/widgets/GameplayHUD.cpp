@@ -68,7 +68,6 @@ namespace ly
         m_LifeCounter.NativeDraw(windowRef);
         m_PlayerScoreIcon.NativeDraw(windowRef);
         m_ScoreCounter.NativeDraw(windowRef);
-        m_Button.NativeDraw(windowRef);
     }
 
     void GameplayHUD::Tick(float deltaTime)
@@ -78,6 +77,11 @@ namespace ly
         int frameRate = int(1 / deltaTime);
         std::string frameRateString = "Frame Rate: " + std::to_string(frameRate);
         m_FpsCounter.SetText(frameRateString);
+    }
+
+    inline bool GameplayHUD::HandleEvent(const sf::Event &event)
+    {
+        return m_Button.HandleEvent(event) || HUD::HandleEvent(event);
     }
 
     void GameplayHUD::OnPlayerHealthUpdated(float amt, float health, float maxHealth)

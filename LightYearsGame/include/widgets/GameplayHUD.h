@@ -21,6 +21,7 @@ namespace ly
         virtual void Init(const sf::RenderWindow &windowRef) override;
         virtual void Draw(sf::RenderWindow &windowRef) override;
         virtual void Tick(float deltaTime) override;
+        virtual bool HandleEvent(const sf::Event &event) override;
 
     private:
         void OnPlayerHealthUpdated(float amt, float health, float maxHealth);

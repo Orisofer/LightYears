@@ -17,11 +17,13 @@ namespace ly
         WidgetButton(const std::string& text = "button",
             const std::string& texturePath = "/SpaceShooterRedux/PNG/UI/buttonGreen.png",
             const std::string& fontPath = "SpaceShooterRedux/Bonus/kenvector_future.ttf",
-            sf::Color colorDefault = sf::Color(45,45,45,255),
+            sf::Color colorDefault = sf::Color(200,200,200,255),
             sf::Color colorClicked = sf::Color(45,150,45,255),
-            sf::Color colorHover = sf::Color(200,200,200,255),
+            sf::Color colorHover = sf::Color(235,235,235,255),
             sf::Color colorText = sf::Color(20,20,20,255));
         virtual sf::FloatRect GetBounds() const override;
+        virtual bool HandleEvent(const sf::Event &event) override;
+        Delegate<> OnClick;
 
     private:
         virtual void Draw(sf::RenderWindow &windowRef) override;
@@ -30,7 +32,11 @@ namespace ly
 
         void InitSprite();
         void InitText(const std::string& text);
+        void SetColor(const sf::Color& color);
         void CenterText();
+        void ButtonUp();
+        void ButtonDown();
+        void MouseHover();
 
     private:
         sf::Sprite m_Sprite;

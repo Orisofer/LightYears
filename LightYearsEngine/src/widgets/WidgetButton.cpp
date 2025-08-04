@@ -19,11 +19,75 @@ namespace ly
     {
         InitText(text);
         InitSprite();
+        SetColor(m_ColorDefault);
+        CenterText();
     }
 
     sf::FloatRect WidgetButton::GetBounds() const
     {
         return m_Sprite.getGlobalBounds();
+    }
+
+    bool WidgetButton::HandleEvent(const sf::Event &event)
+    {
+        bool handled = false;
+
+        if (event.type == sf::Event::MouseButtonReleased)
+        {
+            if (event.mouseButton.button == sf::Mouse::Left)
+            {
+                if (m_Sprite.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && m_IsDown)
+                {
+                    OnClick.Broadcast();
+                    handled = true;
+                }
+            }
+
+            ButtonUp();
+        }
+        else if (event.type == sf::Event::MouseButtonPressed)
+        {
+            if (m_Sprite.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && !m_IsDown)
+            {
+                ButtonDown();
+                handled = true;
+            }
+        }
+        else if (event.type == sf::Event::MouseMoved)
+        {
+            if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            {
+                if (m_Sprite.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))
+                {
+                    MouseHover();
+                }
+                else
+                {
+                    ButtonUp();
+                }
+
+                handled = true;
+            }
+        }
+
+        return handled || Widget::HandleEvent(event);
+    }
+
+    void WidgetButton::ButtonUp()
+    {
+        SetColor(m_ColorDefault);
+        m_IsDown = false;
+    }
+
+    void WidgetButton::ButtonDown()
+    {
+        SetColor(m_ColorClicked);
+        m_IsDown = true;
+    }
+
+    void WidgetButton::MouseHover()
+    {
+        SetColor(m_ColorHover);
     }
 
     void WidgetButton::Draw(sf::RenderWindow &windowRef)
@@ -47,6 +111,11 @@ namespace ly
         CenterText();
     }
 
+    void WidgetButton::SetColor(const sf::Color &color)
+    {
+        m_Sprite.setColor(color);
+    }
+
     void WidgetButton::InitSprite()
     {
         m_Sprite = sf::Sprite(*m_Texture);
@@ -60,16 +129,10 @@ namespace ly
 
     void WidgetButton::CenterText()
     {
+        sf::Vector2f widgetCenter = GetCenter();
         sf::FloatRect textBounds = m_Text.getGlobalBounds();
-        sf::FloatRect backgroundBounds = m_Sprite.getGlobalBounds();
-        sf::Vector2f textHalf = sf::Vector2f(textBounds.width / 2.f, textBounds.height / 2.f);
-        sf::Vector2f backgroundPosition = m_Sprite.getPosition();
+        sf::Vector2f centeredText = sf::Vector2f(widgetCenter.x - (textBounds.width / 2),widgetCenter.y - (textBounds.height));
 
-        sf::Vector2f backgroundCenterPos = sf::Vector2f(backgroundPosition.x + backgroundBounds.width / 2.f,
-            backgroundPosition.y + backgroundBounds.height / 2.f);
-
-        sf::Vector2f textFinalPos = sf::Vector2f(backgroundCenterPos.x - textHalf.x, backgroundCenterPos.y - textBounds.height);
-
-        m_Text.setPosition(textFinalPos);
+        m_Text.setPosition(centeredText);
     }
 }
