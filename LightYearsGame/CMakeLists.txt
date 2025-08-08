@@ -66,11 +66,17 @@ add_executable(${LIGHT_YEARS_GAME_TARGET_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/include/level/GameLevelOne.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/level/GameLevelOne.cpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/level/MainMenuLevel.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/level/MainMenuLevel.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/include/reward/Reward.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/reward/Reward.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/include/widgets/GameplayHUD.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/widgets/GameplayHUD.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/widgets/MainMenuHUD.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/widgets/MainMenuHUD.cpp
     )
 
 target_include_directories(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC
