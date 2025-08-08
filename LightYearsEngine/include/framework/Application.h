@@ -10,6 +10,8 @@
 
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
+
+#include "World.h"
 #include "framework/Core.h"
 
 namespace ly
@@ -30,6 +32,8 @@ namespace ly
         sf::RenderWindow& GetWindow();
         const sf::RenderWindow& GetWindow() const;
 
+        void QuitApplication();
+
     private:
         void TickInternal(float deltaTime);
         void RenderInternal();
@@ -41,6 +45,7 @@ namespace ly
         sf::Clock m_TickClock;
         sf::Clock m_CleanCycleClock;
         shared<World> m_CurrentWorld;
+        shared<World> m_PendingWorld;
         float m_TargetFrameRate;
         float m_CleanCycleInterval;
     };
@@ -49,7 +54,7 @@ namespace ly
     weak<T> Application::LoadWorld()
     {
         shared<T> newWorldPtr{ new T{ this } };
-        m_CurrentWorld = newWorldPtr;
+        m_PendingWorld = newWorldPtr;
         return newWorldPtr;
     }
 }

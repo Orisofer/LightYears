@@ -111,6 +111,16 @@ namespace ly
         }
     }
 
+    Application* World::GetApplication()
+    {
+        return m_OwningApp;
+    }
+
+    const Application * World::GetApplication() const
+    {
+        return m_OwningApp;
+    }
+
     void World::BeginPlay()
     {
         LOG("World Begin");

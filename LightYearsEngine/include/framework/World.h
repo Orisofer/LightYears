@@ -21,6 +21,8 @@ namespace ly
         void Render(sf::RenderWindow& window);
         void CleanCycle();
         void AddStage(const shared<GameStage> stage);
+        Application* GetApplication();
+        const Application* GetApplication() const;
         bool DispatchEvent(const sf::Event& event);
 
         template<typename T, typename... Args>

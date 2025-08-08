@@ -11,7 +11,7 @@ namespace ly
     m_ButtonStart("Start"),
     m_ButtonQuit("Quit")
     {
-        m_TitleText.SetTextSize(50);
+        m_TitleText.SetTextSize(35);
     }
 
     void MainMenuHUD::Init(const sf::RenderWindow &windowRef)

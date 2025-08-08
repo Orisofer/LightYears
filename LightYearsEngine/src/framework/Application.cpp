@@ -40,7 +40,7 @@ namespace ly
             {
                 if (event.type == sf::Event::Closed)
                 {
-                    m_Window.close();
+                    QuitApplication();
                 }
                 else
                 {
@@ -74,7 +74,6 @@ namespace ly
         // ticking the world logic (kind of like update in unity)
         if (m_CurrentWorld)
         {
-            m_CurrentWorld->BeginPlayInternal();
             m_CurrentWorld->TickInternal(deltaTime);
         }
 
@@ -93,6 +92,14 @@ namespace ly
             {
                 m_CurrentWorld->CleanCycle();
             }
+        }
+
+        if (m_PendingWorld && m_PendingWorld != m_CurrentWorld)
+        {
+            m_CurrentWorld = m_PendingWorld;
+            m_CurrentWorld->BeginPlayInternal();
+
+            m_PendingWorld = nullptr;
         }
     }
 
@@ -144,5 +151,10 @@ namespace ly
     const sf::RenderWindow & Application::GetWindow() const
     {
         return m_Window;
+    }
+
+    void Application::QuitApplication()
+    {
+        m_Window.close();
     }
 }
