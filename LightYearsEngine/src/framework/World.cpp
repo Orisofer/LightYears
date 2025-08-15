@@ -103,7 +103,7 @@ namespace ly
         return false;
     }
 
-    void World::AddStage(const shared<GameStage> stage)
+    void World::AddStage(const shared<GameStage>& stage)
     {
         if (stage != nullptr)
         {

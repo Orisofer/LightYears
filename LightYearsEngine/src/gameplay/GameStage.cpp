@@ -8,7 +8,6 @@
 namespace ly
 {
     GameStage::GameStage(World *world) :
-    Object(),
     m_World(world),
     m_StageFinished(false)
     {

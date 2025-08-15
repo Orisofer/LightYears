@@ -16,6 +16,7 @@
 #include "player/PlayerManager.h"
 #include "reward/Reward.h"
 #include "widgets/GameplayHUD.h"
+#include "enemy/ChaosStage.h"
 
 namespace ly
 {
@@ -44,6 +45,8 @@ namespace ly
 
     void GameLevelOne::InitGameStages()
     {
+        AddStage(shared<ChaosStage>(new ChaosStage(this)));
+
         AddStage(shared<VanguardStage>(new VanguardStage(this)));
         AddStage(shared<WaitStage>(new WaitStage(this, 5.f)));
 

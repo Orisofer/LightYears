@@ -20,7 +20,7 @@ namespace ly
         void TickInternal(float deltaTime);
         void Render(sf::RenderWindow& window);
         void CleanCycle();
-        void AddStage(const shared<GameStage> stage);
+        void AddStage(const shared<GameStage>& stage);
         Application* GetApplication();
         const Application* GetApplication() const;
         bool DispatchEvent(const sf::Event& event);
