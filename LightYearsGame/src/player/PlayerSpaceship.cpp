@@ -16,7 +16,12 @@ namespace ly
     : Spaceship{owningWorld, texturePath},
     m_MoveInput{},
     m_MoveSpeed{200.f},
-    m_BulletShooter{new ThreeWayShooter(this, 0.17f, {0.f, 50.f})}
+    m_BulletShooter{new ThreeWayShooter(this, 0.17f, {0.f, 50.f})},
+    m_InvulnerableTime(2.f),
+    m_Invulnerable(true),
+    m_InvulnerableFlashInterval(.5f),
+    m_InvulnerableFlashTimer(0.f),
+    m_InvulnerableFlashDirection(1)
     {
         // this works like a layer mask for collision detection filtering
         SetTeamID(1);
@@ -27,6 +32,45 @@ namespace ly
         Spaceship::Tick(deltaTime);
         HandleInput();
         ConsumeInput(deltaTime);
+        UpdateInvulnerable(deltaTime);
+    }
+
+    void PlayerSpaceship::ApplyDamage(float damage)
+    {
+        if (!m_Invulnerable)
+        {
+            Spaceship::ApplyDamage(damage);
+        }
+    }
+
+    void PlayerSpaceship::BeginPlay()
+    {
+        Spaceship::BeginPlay();
+
+        TimerManager::Get().SetTimer(GetWeakRef(), &PlayerSpaceship::StopInvulnerable, m_InvulnerableTime);
+    }
+
+    void PlayerSpaceship::StopInvulnerable()
+    {
+        GetSprite().setColor(sf::Color(255,255,255,255));
+        m_Invulnerable = false;
+    }
+
+    void PlayerSpaceship::UpdateInvulnerable(float deltaTime)
+    {
+        if (!m_Invulnerable) return;
+
+        m_InvulnerableFlashTimer += deltaTime * m_InvulnerableFlashDirection;
+
+        if (m_InvulnerableFlashTimer < 0.f || m_InvulnerableFlashTimer > m_InvulnerableFlashInterval)
+        {
+            m_InvulnerableFlashDirection *= -1.f;
+        }
+
+        GetSprite().setColor(
+            LerpColor({255,255,255, 64},
+            {255,255,255,128},
+            m_InvulnerableFlashTimer / m_InvulnerableFlashInterval));
     }
 
     void PlayerSpaceship::SetSpeed(float speed)
