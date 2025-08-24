@@ -60,6 +60,12 @@ namespace ly
         return m_MaxHealth;
     }
 
+    void HealthComponent::SetHealth(int health, int maxHealth)
+    {
+        m_Health = health;
+        m_MaxHealth = maxHealth;
+    }
+
     void HealthComponent::TakeDamage(float amt)
     {
         onTakenDamage.Broadcast(amt, m_Health, m_MaxHealth);

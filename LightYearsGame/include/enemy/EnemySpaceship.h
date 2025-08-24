@@ -16,6 +16,7 @@ namespace ly
         EnemySpaceship(World* owningWorld, const std::string& texturePath, float collisionDamage = 200.f);
         virtual void Tick(float deltaTime) override;
         void SetScoreAmount(unsigned int amount);
+        void SetRewardSpawnWeight(float weight);
 
     private:
         virtual void OnActorBeginOverlap(Actor *other) override;

@@ -33,6 +33,14 @@ namespace ly
         m_ScoreAmount = amount;
     }
 
+    void EnemySpaceship::SetRewardSpawnWeight(float weight)
+    {
+        if (weight < 0.f || weight > 1.f)
+        {
+            m_RewardsMethods = {};
+        }
+    }
+
     void EnemySpaceship::SetRewards()
     {
         m_RewardsMethods =

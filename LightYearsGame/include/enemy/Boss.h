@@ -6,6 +6,9 @@
 #define BOSS_H
 
 #include "enemy/EnemySpaceship.h"
+#include "weapon/ThreeWayShooter.h"
+#include "weapon/FrontalWiperShooter.h"
+#include "gameplay/HealthComponent.h"
 
 namespace ly
 {
@@ -17,8 +20,13 @@ namespace ly
         virtual void Tick(float deltaTime) override;
 
     private:
+        void CheckMove();
+        void ShootBaseShooters();
         float m_Speed;
         float m_SwitchDistanceToEdge;
+
+        BulletShooter m_BaseShooterLeft;
+        BulletShooter m_BaseShooterRight;
 
     };
 
