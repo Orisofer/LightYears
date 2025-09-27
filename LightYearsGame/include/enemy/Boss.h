@@ -22,12 +22,20 @@ namespace ly
     private:
         void CheckMove();
         void ShootBaseShooters();
+        void ShootThreeWayShooter();
+        void ShootFrontalWiperShooters();
+        void HealthChanged(float amount, float currentHealth, float maxHealth);
+        void SetStage(int stage);
         float m_Speed;
         float m_SwitchDistanceToEdge;
+        int m_Stage;
 
         BulletShooter m_BaseShooterLeft;
         BulletShooter m_BaseShooterRight;
 
+        ThreeWayShooter m_ThreeWayShooter;
+        FrontalWiperShooter m_FrontalWiperShooterLeft;
+        FrontalWiperShooter m_FrontalWiperShooterRight;
     };
 
 }

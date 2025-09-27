@@ -20,12 +20,15 @@ namespace ly
         bool CanShoot() const override;
         void SetTexturePath(const std::string& texturePath);
         virtual void LevelUp(int amount = 1) override;
+
+    protected:
+        float m_LocalRotationOffset;
+
     private:
         void ShootImpl() override;
         sf::Clock m_CooldownClock;
         sf::Vector2f m_LocalPositionOffset;
         std::string m_TexturePath;
-        float m_LocalRotationOffset;
         float m_CooldownTime;
         float m_BulletsAngle;
     };

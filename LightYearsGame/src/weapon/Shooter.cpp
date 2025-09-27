@@ -53,6 +53,11 @@ namespace ly
         return m_MaxLevel;
     }
 
+    void Shooter::SetCurrentLevel(int level)
+    {
+        m_CurrentLevel = level;
+    }
+
     Actor * Shooter::GetOwner() const
     {
         return m_Owner;

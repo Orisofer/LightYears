@@ -6,7 +6,7 @@
 
 namespace ly
 {
-    ThreeWayShooter::ThreeWayShooter(Actor *owningActor, float cooldownTime, const sf::Vector2f &localOffset)
+    ThreeWayShooter::ThreeWayShooter(Actor *owningActor, float cooldownTime, const sf::Vector2f &localOffset, float localRotationOffset)
         : Shooter(owningActor),
     m_ShooterLeft(owningActor, cooldownTime, localOffset + sf::Vector2f(-50.f,10.f), -25.f,
         "SpaceShooterRedux/PNG/Lasers/laserGreen11.png"),
@@ -32,6 +32,18 @@ namespace ly
 
         m_MaxLevelShooterLeft.LevelUp(amount);
         m_MaxLevelShooterRight.LevelUp(amount);
+    }
+
+    void ThreeWayShooter::SetCurrentLevel(int level)
+    {
+        Shooter::SetCurrentLevel(level);
+
+        m_ShooterLeft.SetCurrentLevel(level);
+        m_ShooterMid.SetCurrentLevel(level);
+        m_ShooterRight.SetCurrentLevel(level);
+
+        m_MaxLevelShooterLeft.SetCurrentLevel(level);
+        m_MaxLevelShooterRight.SetCurrentLevel(level);
     }
 
     void ThreeWayShooter::ShootImpl()

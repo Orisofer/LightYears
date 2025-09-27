@@ -19,6 +19,7 @@ namespace ly
         virtual void LevelUp(int amount = 1);
         int GetCurrentLevel() const;
         int GetMaxLevel() const;
+        virtual void SetCurrentLevel(int level);
         virtual ~Shooter() = default;
     protected:
         Shooter(Actor* owner);

@@ -14,8 +14,9 @@ namespace ly
     {
     public:
         FrontalWiperShooter(Actor* owningActor, float cooldownTime = .3f,
-            const sf::Vector2f& localOffset = sf::Vector2f(0.f,0.f));
+            const sf::Vector2f& localOffset = sf::Vector2f(0.f,0.f), float localRotationOffset = 0);
         virtual void LevelUp(int amount) override;
+        virtual void SetCurrentLevel(int level) override;
     private:
         virtual void ShootImpl() override;
 
